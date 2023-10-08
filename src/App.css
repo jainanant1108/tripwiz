@@ -1,6 +1,5 @@
 .container {
-  display: flex;
   overflow: hidden;
   max-width: 1366px;
-  justify-content: center;
+  margin: 0 auto;
 }

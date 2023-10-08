@@ -24,7 +24,7 @@ const theme = createTheme({
   typography: {
     htmlFontSize: 18,
     fontSize: 18,
-    fontFamily: ["Poppins"].join(","),
+    fontFamily: ["Poppins", "Recursive"].join(","),
     fontWeightBold: 700,
     fontWeightLight: 300,
     fontWeightMedium: 600,
