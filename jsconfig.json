@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "target": "ES6",
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "checkJs": true
   },
+
   "include": ["src/**/*.js"]
 }

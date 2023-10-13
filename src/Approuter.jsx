@@ -1,13 +1,18 @@
 // @ts-nocheck
 import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Home } from "./pages";
+import { Home, Login } from "./pages";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
   },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  2,
 ]);
 
 function Approuter() {
