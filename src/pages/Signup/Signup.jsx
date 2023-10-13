@@ -1,12 +1,12 @@
 import { Button, Grid, TextField, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { FacebookIcon, GoogleIcon, Logo } from "../../utils/images";
-import LoginImage from "../../utils/images/LoginImage.png";
+import SignUpImage from "../../utils/images/SignupImage.png";
 // import { Button } from "../../components";
 import {
   FacebookAuthProvider,
   GoogleAuthProvider,
-  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   getAuth,
   signInWithPopup,
 } from "firebase/auth";
@@ -14,7 +14,7 @@ import { Controller, FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import ButtonComponent from "../../components/Button/Button";
 
-const Login = () => {
+const Signup = () => {
   const navigate = useNavigate();
   const methods = useForm({
     mode: "onBlur",
@@ -62,12 +62,11 @@ const Login = () => {
   const onSubmit = async (formData) => {
     try {
       const auth = getAuth();
-      const user = await signInWithEmailAndPassword(
+      await createUserWithEmailAndPassword(
         auth,
         formData?.email,
         formData?.password
       );
-      console.log("user", user);
       navigate("/", { replace: true });
       // The user is signed up.
     } catch (error) {
@@ -79,12 +78,14 @@ const Login = () => {
     <FormProvider {...methods}>
       <form noValidate onSubmit={methods.handleSubmit(onSubmit)}>
         <Grid container justifyContent={"space-between"}>
+          <Grid container lg={5.5}>
+            <img src={SignUpImage} alt="" srcset="" width={"100%"} />
+          </Grid>
           <Grid
             container
             lg={5.5}
             flexDirection={"column"}
             gap={theme.spacing(10)}
-            justifyContent={"space-evenly"}
           >
             <Grid item>
               <Grid
@@ -109,9 +110,8 @@ const Login = () => {
                 fontSize={"26px"}
                 fontWeight={400}
                 color={theme.palette.grey[100]}
-                textAlign={"center"}
               >
-                {"Welcome back to the experience of ease of mind"}
+                {"Welcome to the journey without worry"}
               </Typography>
             </Grid>
             <Grid container gap={theme.spacing(6)}>
@@ -156,6 +156,16 @@ const Login = () => {
                       value: 8,
                       message: "Password Should be Greater then 8 characters",
                     },
+                    maxLength: {
+                      value: 40,
+                      message: "Password Should be Lesser then 40 characters",
+                    },
+                    pattern: {
+                      value:
+                        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+                      message:
+                        "Password should consist of atleast one uppercase letter, one lowercase letter, one digit and one special character",
+                    },
                   }}
                   render={({ field }) => (
                     <TextField
@@ -178,11 +188,46 @@ const Login = () => {
                   )}
                 />
               </Grid>
+              <Grid container justifyContent={"center"} lg={12}>
+                <Controller
+                  name="confirmPassword"
+                  control={control}
+                  rules={{
+                    required: "Please enter confirm password",
+                    validate: async (val, formValues) => {
+                      if (val !== formValues?.password) {
+                        return "Password and Confirm Password do not match";
+                      }
+
+                      return true;
+                    },
+                  }}
+                  render={({ field }) => (
+                    <TextField
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      sx={{
+                        width: "90%",
+                      }}
+                      type="password"
+                      autoComplete=""
+                      placeholder="Confirm Password"
+                      field={field}
+                      value={field.value}
+                      inputRef={field.ref}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                      error={errors?.confirmPassword?.message}
+                      helperText={errors?.confirmPassword?.message}
+                    />
+                  )}
+                />
+              </Grid>
             </Grid>
             <Grid container justifyContent={"center"}>
               <ButtonComponent
-                id={"login"}
-                label={"Login"}
+                id={"signup"}
+                label={"Signup"}
                 variant={"primary"}
                 sx={{ width: "90%" }}
                 labelFontSize={"24px"}
@@ -244,13 +289,10 @@ const Login = () => {
               </Button>
             </Grid>
           </Grid>
-          <Grid container lg={5.5}>
-            <img src={LoginImage} alt="" srcset="" width={"100%"} />
-          </Grid>
         </Grid>
       </form>
     </FormProvider>
   );
 };
 
-export default Login;
+export default Signup;

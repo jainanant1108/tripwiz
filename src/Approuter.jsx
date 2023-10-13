@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Home, Login } from "./pages";
+import { Home, Login, Signup } from "./pages";
 
 const router = createBrowserRouter([
   {
@@ -12,7 +12,10 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
-  2,
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
 ]);
 
 function Approuter() {
