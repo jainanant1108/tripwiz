@@ -7,6 +7,24 @@
   pointer-events: none;
 }
 
+#wipWrapper{
+  width: 100%;
+  height: 72%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+#homePage{
+  height: 96vh;
+  width: 100%;
+}
+
+#footer{
+  background-color: #282c34;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

@@ -13,6 +13,7 @@ import {
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import ButtonComponent from "../../components/Button/Button";
+import Footer from "../../components/Footer/Footer";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ const Signup = () => {
   return (
     <FormProvider {...methods}>
       <form noValidate onSubmit={methods.handleSubmit(onSubmit)}>
-        <Grid container justifyContent={"space-between"}>
+        <Grid container justifyContent={"space-between"} marginBottom={10}>
           <Grid container lg={5.5}>
             <img src={SignUpImage} alt="" srcset="" width={"100%"} />
           </Grid>
@@ -291,6 +292,7 @@ const Signup = () => {
           </Grid>
         </Grid>
       </form>
+      <Footer />
     </FormProvider>
   );
 };
