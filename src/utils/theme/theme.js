@@ -1,3 +1,4 @@
+// @ts-ignore
 import { createTheme } from "@mui/material";
 
 const theme = createTheme({
@@ -11,6 +12,9 @@ const theme = createTheme({
     grey: {
       100: "#969696",
       200: "#C2C2C2",
+    },
+    error: {
+      main: "#B34D0E",
     },
   },
   breakpoints: {
