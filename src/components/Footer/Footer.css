@@ -1,0 +1,32 @@
+#column1OuterWrapper {
+  display: block;
+}
+#column1Row1Wrapper {
+  display: flex;
+}
+#column1LogoWrapper {
+  display: block;
+}
+#column1LinksWrapper {
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+  justify-content: center;
+  margin-left: 20px;
+  flex-direction: column;
+  margin-right: 30px;
+}
+#column2OuterWrapper {
+  display: flex;
+  justify-content: end;
+}
+
+.linksList {
+  list-style: none;
+  padding: 2px;
+  float: right;
+}
+
+li {
+  margin: 10px;
+}

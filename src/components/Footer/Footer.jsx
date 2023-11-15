@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Typography, useTheme, Box } from "@mui/material";
-import Logo from "../../utils/images/LogoSvg.svg";
+import { Logo } from "../../utils/images";
 import "./Footer.css";
 
 const Footer = () => {

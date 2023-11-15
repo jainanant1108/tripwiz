@@ -13,7 +13,6 @@ function App() {
         style={{ background: theme.palette.secondary.main }}
       >
         <div className="container">
-          <Header />
           <Approuter />
         </div>
       </div>

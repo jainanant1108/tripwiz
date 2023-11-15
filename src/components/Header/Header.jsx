@@ -2,13 +2,14 @@ import { Grid, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { Button } from "../../components";
 import { Logo } from "../../utils/images";
-import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const theme = useTheme();
-  const navigate = useNavigate();
   const handleLoginCLick = () => {
-    navigate("/login");
+    window.location.href = "/login";
+  };
+  const handleSignupCLick = () => {
+    window.location.href = "/signup";
   };
   return (
     <Grid container>
@@ -67,7 +68,7 @@ const Header = () => {
           <Button
             id="signUp"
             variant="primary"
-            onClick={() => {}}
+            onClick={handleSignupCLick}
             label="Sign up"
           />
         </Grid>

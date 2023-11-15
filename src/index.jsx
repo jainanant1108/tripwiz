@@ -17,7 +17,6 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import theme from "./utils/theme/theme";
 // Import the functions you need from the SDKs you need
-import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import { applyMiddleware, createStore } from "redux";
 import { Provider } from "react-redux";
@@ -39,7 +38,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
