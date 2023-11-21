@@ -77,219 +77,221 @@ const Signup = () => {
   return (
     <FormProvider {...methods}>
       <form noValidate onSubmit={methods.handleSubmit(onSubmit)}>
-        <Grid container justifyContent={"space-between"}>
-          <Grid container lg={5.5}>
-            <img src={SignUpImage} alt="" srcset="" width={"100%"} />
-          </Grid>
-          <Grid
-            container
-            lg={5.5}
-            flexDirection={"column"}
-            gap={theme.spacing(10)}
-          >
-            <Grid item>
-              <Grid
-                container
-                mt={theme.spacing(4)}
-                justifyContent={"center"}
-                gap={theme.spacing(5)}
-              >
-                <Logo />
-                <Typography
-                  fontWeight={600}
-                  fontFamily={"Poppins"}
-                  fontSize={theme.spacing(9)}
+        <div className="container">
+          <Grid container justifyContent={"space-between"}>
+            <Grid container lg={5.5}>
+              <img src={SignUpImage} alt="" srcset="" width={"100%"} />
+            </Grid>
+            <Grid
+              container
+              lg={5.5}
+              flexDirection={"column"}
+              gap={theme.spacing(10)}
+            >
+              <Grid item>
+                <Grid
+                  container
+                  mt={theme.spacing(4)}
+                  justifyContent={"center"}
+                  gap={theme.spacing(5)}
                 >
-                  TripWiz
+                  <Logo />
+                  <Typography
+                    fontWeight={600}
+                    fontFamily={"Poppins"}
+                    fontSize={theme.spacing(9)}
+                  >
+                    TripWiz
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid item alignSelf={"center"}>
+                <Typography
+                  fontFamily={"Recursive"}
+                  fontSize={"26px"}
+                  fontWeight={400}
+                  color={theme.palette.grey[100]}
+                >
+                  {"Welcome to the journey without worry"}
                 </Typography>
               </Grid>
-            </Grid>
-            <Grid item alignSelf={"center"}>
-              <Typography
-                fontFamily={"Recursive"}
-                fontSize={"26px"}
-                fontWeight={400}
-                color={theme.palette.grey[100]}
-              >
-                {"Welcome to the journey without worry"}
-              </Typography>
-            </Grid>
-            <Grid container gap={theme.spacing(6)}>
-              <Grid container justifyContent={"center"} lg={12}>
-                <Controller
-                  name="email"
-                  control={control}
-                  rules={{
-                    required: "Please enter email address",
-                    pattern: {
-                      value: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-z]{2,7}$/,
-                      message: "Please enter a valid email address",
-                    },
-                  }}
-                  render={({ field }) => (
-                    <TextField
-                      id="email"
-                      name="email"
-                      sx={{
-                        width: "90%",
-                      }}
-                      placeholder="Email"
-                      type="email"
-                      field={field}
-                      value={field.value}
-                      inputRef={field.ref}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      error={errors?.email?.message}
-                      helperText={errors?.email?.message}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid container justifyContent={"center"} lg={12}>
-                <Controller
-                  name="password"
-                  control={control}
-                  rules={{
-                    required: "Please enter password",
-                    minLength: {
-                      value: 8,
-                      message: "Password Should be Greater then 8 characters",
-                    },
-                    maxLength: {
-                      value: 40,
-                      message: "Password Should be Lesser then 40 characters",
-                    },
-                    pattern: {
-                      value:
-                        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-                      message:
-                        "Password should consist of atleast one uppercase letter, one lowercase letter, one digit and one special character",
-                    },
-                  }}
-                  render={({ field }) => (
-                    <TextField
-                      id="password"
-                      name="password"
-                      sx={{
-                        width: "90%",
-                      }}
-                      type="password"
-                      autoComplete="current-password"
-                      placeholder="Password"
-                      field={field}
-                      value={field.value}
-                      inputRef={field.ref}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      error={errors?.password?.message}
-                      helperText={errors?.password?.message}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid container justifyContent={"center"} lg={12}>
-                <Controller
-                  name="confirmPassword"
-                  control={control}
-                  rules={{
-                    required: "Please enter confirm password",
-                    validate: async (val, formValues) => {
-                      if (val !== formValues?.password) {
-                        return "Password and Confirm Password do not match";
-                      }
+              <Grid container gap={theme.spacing(6)}>
+                <Grid container justifyContent={"center"} lg={12}>
+                  <Controller
+                    name="email"
+                    control={control}
+                    rules={{
+                      required: "Please enter email address",
+                      pattern: {
+                        value: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-z]{2,7}$/,
+                        message: "Please enter a valid email address",
+                      },
+                    }}
+                    render={({ field }) => (
+                      <TextField
+                        id="email"
+                        name="email"
+                        sx={{
+                          width: "90%",
+                        }}
+                        placeholder="Email"
+                        type="email"
+                        field={field}
+                        value={field.value}
+                        inputRef={field.ref}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                        error={errors?.email?.message}
+                        helperText={errors?.email?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid container justifyContent={"center"} lg={12}>
+                  <Controller
+                    name="password"
+                    control={control}
+                    rules={{
+                      required: "Please enter password",
+                      minLength: {
+                        value: 8,
+                        message: "Password Should be Greater then 8 characters",
+                      },
+                      maxLength: {
+                        value: 40,
+                        message: "Password Should be Lesser then 40 characters",
+                      },
+                      pattern: {
+                        value:
+                          /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+                        message:
+                          "Password should consist of atleast one uppercase letter, one lowercase letter, one digit and one special character",
+                      },
+                    }}
+                    render={({ field }) => (
+                      <TextField
+                        id="password"
+                        name="password"
+                        sx={{
+                          width: "90%",
+                        }}
+                        type="password"
+                        autoComplete="current-password"
+                        placeholder="Password"
+                        field={field}
+                        value={field.value}
+                        inputRef={field.ref}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                        error={errors?.password?.message}
+                        helperText={errors?.password?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid container justifyContent={"center"} lg={12}>
+                  <Controller
+                    name="confirmPassword"
+                    control={control}
+                    rules={{
+                      required: "Please enter confirm password",
+                      validate: async (val, formValues) => {
+                        if (val !== formValues?.password) {
+                          return "Password and Confirm Password do not match";
+                        }
 
-                      return true;
-                    },
-                  }}
-                  render={({ field }) => (
-                    <TextField
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      sx={{
-                        width: "90%",
-                      }}
-                      type="password"
-                      autoComplete=""
-                      placeholder="Confirm Password"
-                      field={field}
-                      value={field.value}
-                      inputRef={field.ref}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      error={errors?.confirmPassword?.message}
-                      helperText={errors?.confirmPassword?.message}
-                    />
-                  )}
+                        return true;
+                      },
+                    }}
+                    render={({ field }) => (
+                      <TextField
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        sx={{
+                          width: "90%",
+                        }}
+                        type="password"
+                        autoComplete=""
+                        placeholder="Confirm Password"
+                        field={field}
+                        value={field.value}
+                        inputRef={field.ref}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                        error={errors?.confirmPassword?.message}
+                        helperText={errors?.confirmPassword?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container justifyContent={"center"}>
+                <ButtonComponent
+                  id={"signup"}
+                  label={"Signup"}
+                  variant={"primary"}
+                  sx={{ width: "90%" }}
+                  labelFontSize={"24px"}
+                  buttonType="submit"
                 />
               </Grid>
-            </Grid>
-            <Grid container justifyContent={"center"}>
-              <ButtonComponent
-                id={"signup"}
-                label={"Signup"}
-                variant={"primary"}
-                sx={{ width: "90%" }}
-                labelFontSize={"24px"}
-                buttonType="submit"
-              />
-            </Grid>
-            <Grid container justifyContent={"center"}>
-              <Button
-                id="googleSigning"
-                sx={{
-                  width: "90%",
-                  background: theme.palette.primary.main,
-                  borderRadius: "15px",
-                  boxShadow: "4px 4px 10px 5px rgba(0, 0, 0, 0.07)",
-                  "&:hover": {
+              <Grid container justifyContent={"center"}>
+                <Button
+                  id="googleSigning"
+                  sx={{
+                    width: "90%",
                     background: theme.palette.primary.main,
-                  },
-                  p: `${theme.spacing(3)} 0px`,
-                }}
-                onClick={handleSignInWithGoogle}
-              >
-                <GoogleIcon />
-                <Typography
-                  fontFamily={"Poppins"}
-                  fontSize={theme.spacing(4)}
-                  fontWeight={600}
-                  marginLeft={theme.spacing(10)}
-                  color={theme.palette.secondary.main}
+                    borderRadius: "15px",
+                    boxShadow: "4px 4px 10px 5px rgba(0, 0, 0, 0.07)",
+                    "&:hover": {
+                      background: theme.palette.primary.main,
+                    },
+                    p: `${theme.spacing(3)} 0px`,
+                  }}
+                  onClick={handleSignInWithGoogle}
                 >
-                  {"Continue with Google"}
-                </Typography>
-              </Button>
-            </Grid>
-            <Grid container justifyContent={"center"}>
-              <Button
-                id="facebookSigning"
-                sx={{
-                  width: "90%",
-                  background: theme.palette.primary.main,
-                  borderRadius: "15px",
-                  boxShadow: "4px 4px 10px 5px rgba(0, 0, 0, 0.07)",
-                  "&:hover": {
+                  <GoogleIcon />
+                  <Typography
+                    fontFamily={"Poppins"}
+                    fontSize={theme.spacing(4)}
+                    fontWeight={600}
+                    marginLeft={theme.spacing(10)}
+                    color={theme.palette.secondary.main}
+                  >
+                    {"Continue with Google"}
+                  </Typography>
+                </Button>
+              </Grid>
+              <Grid container justifyContent={"center"}>
+                <Button
+                  id="facebookSigning"
+                  sx={{
+                    width: "90%",
                     background: theme.palette.primary.main,
-                  },
-                  p: `${theme.spacing(3)} 0px`,
-                }}
-                onClick={handleSignInWithFacebook}
-              >
-                <FacebookIcon />
-                <Typography
-                  fontFamily={"Poppins"}
-                  fontSize={theme.spacing(4)}
-                  fontWeight={600}
-                  marginLeft={theme.spacing(10)}
-                  color={theme.palette.secondary.main}
+                    borderRadius: "15px",
+                    boxShadow: "4px 4px 10px 5px rgba(0, 0, 0, 0.07)",
+                    "&:hover": {
+                      background: theme.palette.primary.main,
+                    },
+                    p: `${theme.spacing(3)} 0px`,
+                  }}
+                  onClick={handleSignInWithFacebook}
                 >
-                  {"Continue with Facebook"}
-                </Typography>
-              </Button>
+                  <FacebookIcon />
+                  <Typography
+                    fontFamily={"Poppins"}
+                    fontSize={theme.spacing(4)}
+                    fontWeight={600}
+                    marginLeft={theme.spacing(10)}
+                    color={theme.palette.secondary.main}
+                  >
+                    {"Continue with Facebook"}
+                  </Typography>
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        </div>
       </form>
     </FormProvider>
   );

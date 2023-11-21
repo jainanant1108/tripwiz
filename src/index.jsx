@@ -19,8 +19,6 @@ import theme from "./utils/theme/theme";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { applyMiddleware, createStore } from "redux";
-import { Provider } from "react-redux";
-import rootReducer from "./reducers"; // Create this file
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -41,17 +39,11 @@ const app = initializeApp(firebaseConfig);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const store = createStore(
-  rootReducer,
-  applyMiddleware(/* any middleware you need */)
-);
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>
 );
 

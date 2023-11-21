@@ -78,176 +78,178 @@ const Login = () => {
   return (
     <FormProvider {...methods}>
       <form noValidate onSubmit={methods.handleSubmit(onSubmit)}>
-        <Grid container justifyContent={"space-between"}>
-          <Grid
-            container
-            lg={5.5}
-            flexDirection={"column"}
-            gap={theme.spacing(10)}
-            justifyContent={"space-evenly"}
-          >
-            <Grid item>
-              <Grid
-                container
-                mt={theme.spacing(4)}
-                justifyContent={"center"}
-                gap={theme.spacing(5)}
-              >
-                <Logo />
-                <Typography
-                  fontWeight={600}
-                  fontFamily={"Poppins"}
-                  fontSize={theme.spacing(9)}
+        <div className="container">
+          <Grid container justifyContent={"space-between"}>
+            <Grid
+              container
+              lg={5.5}
+              flexDirection={"column"}
+              gap={theme.spacing(10)}
+              justifyContent={"space-evenly"}
+            >
+              <Grid item>
+                <Grid
+                  container
+                  mt={theme.spacing(4)}
+                  justifyContent={"center"}
+                  gap={theme.spacing(5)}
                 >
-                  TripWiz
+                  <Logo />
+                  <Typography
+                    fontWeight={600}
+                    fontFamily={"Poppins"}
+                    fontSize={theme.spacing(9)}
+                  >
+                    TripWiz
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid item alignSelf={"center"}>
+                <Typography
+                  fontFamily={"Recursive"}
+                  fontSize={"26px"}
+                  fontWeight={400}
+                  color={theme.palette.grey[100]}
+                  textAlign={"center"}
+                >
+                  {"Welcome back to the experience of ease of mind"}
                 </Typography>
               </Grid>
-            </Grid>
-            <Grid item alignSelf={"center"}>
-              <Typography
-                fontFamily={"Recursive"}
-                fontSize={"26px"}
-                fontWeight={400}
-                color={theme.palette.grey[100]}
-                textAlign={"center"}
-              >
-                {"Welcome back to the experience of ease of mind"}
-              </Typography>
-            </Grid>
-            <Grid container gap={theme.spacing(6)}>
-              <Grid container justifyContent={"center"} lg={12}>
-                <Controller
-                  name="email"
-                  control={control}
-                  rules={{
-                    required: "Please enter email address",
-                    pattern: {
-                      value: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-z]{2,7}$/,
-                      message: "Please enter a valid email address",
-                    },
-                  }}
-                  render={({ field }) => (
-                    <TextField
-                      id="email"
-                      name="email"
-                      sx={{
-                        width: "90%",
-                      }}
-                      placeholder="Email"
-                      type="email"
-                      field={field}
-                      value={field.value}
-                      inputRef={field.ref}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      error={errors?.email?.message}
-                      helperText={errors?.email?.message}
-                    />
-                  )}
+              <Grid container gap={theme.spacing(6)}>
+                <Grid container justifyContent={"center"} lg={12}>
+                  <Controller
+                    name="email"
+                    control={control}
+                    rules={{
+                      required: "Please enter email address",
+                      pattern: {
+                        value: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-z]{2,7}$/,
+                        message: "Please enter a valid email address",
+                      },
+                    }}
+                    render={({ field }) => (
+                      <TextField
+                        id="email"
+                        name="email"
+                        sx={{
+                          width: "90%",
+                        }}
+                        placeholder="Email"
+                        type="email"
+                        field={field}
+                        value={field.value}
+                        inputRef={field.ref}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                        error={errors?.email?.message}
+                        helperText={errors?.email?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid container justifyContent={"center"} lg={12}>
+                  <Controller
+                    name="password"
+                    control={control}
+                    rules={{
+                      required: "Please enter password",
+                      minLength: {
+                        value: 8,
+                        message: "Password Should be Greater then 8 characters",
+                      },
+                    }}
+                    render={({ field }) => (
+                      <TextField
+                        id="password"
+                        name="password"
+                        sx={{
+                          width: "90%",
+                        }}
+                        type="password"
+                        autoComplete="current-password"
+                        placeholder="Password"
+                        field={field}
+                        value={field.value}
+                        inputRef={field.ref}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                        error={errors?.password?.message}
+                        helperText={errors?.password?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container justifyContent={"center"}>
+                <ButtonComponent
+                  id={"login"}
+                  label={"Login"}
+                  variant={"primary"}
+                  sx={{ width: "90%" }}
+                  labelFontSize={"24px"}
+                  buttonType="submit"
                 />
               </Grid>
-              <Grid container justifyContent={"center"} lg={12}>
-                <Controller
-                  name="password"
-                  control={control}
-                  rules={{
-                    required: "Please enter password",
-                    minLength: {
-                      value: 8,
-                      message: "Password Should be Greater then 8 characters",
+              <Grid container justifyContent={"center"}>
+                <Button
+                  id="googleSigning"
+                  sx={{
+                    width: "90%",
+                    background: theme.palette.primary.main,
+                    borderRadius: "15px",
+                    boxShadow: "4px 4px 10px 5px rgba(0, 0, 0, 0.07)",
+                    "&:hover": {
+                      background: theme.palette.primary.main,
                     },
+                    p: `${theme.spacing(3)} 0px`,
                   }}
-                  render={({ field }) => (
-                    <TextField
-                      id="password"
-                      name="password"
-                      sx={{
-                        width: "90%",
-                      }}
-                      type="password"
-                      autoComplete="current-password"
-                      placeholder="Password"
-                      field={field}
-                      value={field.value}
-                      inputRef={field.ref}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      error={errors?.password?.message}
-                      helperText={errors?.password?.message}
-                    />
-                  )}
-                />
+                  onClick={handleSignInWithGoogle}
+                >
+                  <GoogleIcon />
+                  <Typography
+                    fontFamily={"Poppins"}
+                    fontSize={theme.spacing(4)}
+                    fontWeight={600}
+                    marginLeft={theme.spacing(10)}
+                    color={theme.palette.secondary.main}
+                  >
+                    {"Continue with Google"}
+                  </Typography>
+                </Button>
+              </Grid>
+              <Grid container justifyContent={"center"}>
+                <Button
+                  id="facebookSigning"
+                  sx={{
+                    width: "90%",
+                    background: theme.palette.primary.main,
+                    borderRadius: "15px",
+                    boxShadow: "4px 4px 10px 5px rgba(0, 0, 0, 0.07)",
+                    "&:hover": {
+                      background: theme.palette.primary.main,
+                    },
+                    p: `${theme.spacing(3)} 0px`,
+                  }}
+                  onClick={handleSignInWithFacebook}
+                >
+                  <FacebookIcon />
+                  <Typography
+                    fontFamily={"Poppins"}
+                    fontSize={theme.spacing(4)}
+                    fontWeight={600}
+                    marginLeft={theme.spacing(10)}
+                    color={theme.palette.secondary.main}
+                  >
+                    {"Continue with Facebook"}
+                  </Typography>
+                </Button>
               </Grid>
             </Grid>
-            <Grid container justifyContent={"center"}>
-              <ButtonComponent
-                id={"login"}
-                label={"Login"}
-                variant={"primary"}
-                sx={{ width: "90%" }}
-                labelFontSize={"24px"}
-                buttonType="submit"
-              />
-            </Grid>
-            <Grid container justifyContent={"center"}>
-              <Button
-                id="googleSigning"
-                sx={{
-                  width: "90%",
-                  background: theme.palette.primary.main,
-                  borderRadius: "15px",
-                  boxShadow: "4px 4px 10px 5px rgba(0, 0, 0, 0.07)",
-                  "&:hover": {
-                    background: theme.palette.primary.main,
-                  },
-                  p: `${theme.spacing(3)} 0px`,
-                }}
-                onClick={handleSignInWithGoogle}
-              >
-                <GoogleIcon />
-                <Typography
-                  fontFamily={"Poppins"}
-                  fontSize={theme.spacing(4)}
-                  fontWeight={600}
-                  marginLeft={theme.spacing(10)}
-                  color={theme.palette.secondary.main}
-                >
-                  {"Continue with Google"}
-                </Typography>
-              </Button>
-            </Grid>
-            <Grid container justifyContent={"center"}>
-              <Button
-                id="facebookSigning"
-                sx={{
-                  width: "90%",
-                  background: theme.palette.primary.main,
-                  borderRadius: "15px",
-                  boxShadow: "4px 4px 10px 5px rgba(0, 0, 0, 0.07)",
-                  "&:hover": {
-                    background: theme.palette.primary.main,
-                  },
-                  p: `${theme.spacing(3)} 0px`,
-                }}
-                onClick={handleSignInWithFacebook}
-              >
-                <FacebookIcon />
-                <Typography
-                  fontFamily={"Poppins"}
-                  fontSize={theme.spacing(4)}
-                  fontWeight={600}
-                  marginLeft={theme.spacing(10)}
-                  color={theme.palette.secondary.main}
-                >
-                  {"Continue with Facebook"}
-                </Typography>
-              </Button>
+            <Grid container lg={5.5}>
+              <img src={LoginImage} alt="" srcset="" width={"100%"} />
             </Grid>
           </Grid>
-          <Grid container lg={5.5}>
-            <img src={LoginImage} alt="" srcset="" width={"100%"} />
-          </Grid>
-        </Grid>
+        </div>
       </form>
     </FormProvider>
   );
