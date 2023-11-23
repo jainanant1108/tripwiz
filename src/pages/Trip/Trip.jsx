@@ -8,16 +8,23 @@ import { Header, LocationSearchBar, Snackbar } from "../../components";
 import { setTrip, setDates } from "../../store/slices";
 import TripImage from "../../utils/images/TripImage.png";
 import DateSelection from "./DateSelection/DateSelection";
+import { useTripService } from "../../hooks";
+import PurposeSelection from "./PurposeSelection/PurposeSelection";
 
 const Trip = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [isDateSelection, setIsDateSelection] = useState(true);
+  const [startDate, setStartDate] = useState("Start Date");
+  const [endDate, setEndDate] = useState("End Date");
+  const [tripType, setTripType] = useState();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionErrorMessage, setSubmissionErrorMessage] = useState();
   const trip = useSelector((state) => state.trip);
   const navigate = useNavigate();
   const theme = useTheme();
   const dispatch = useDispatch();
-  const [isDateSelection, setIsDateSelection] = useState(true);
-  const [startDate, setStartDate] = useState("Start Date");
-  const [endDate, setEndDate] = useState("End Date");
+  const generateTrip = useTripService();
+
   const handleSelect = (address, placeId) => {
     // Fetch location details by place ID
     geocodeByPlaceId(placeId)
@@ -51,11 +58,17 @@ const Trip = () => {
   };
 
   const handleNextClick = () => {
-    if (isDateSelection) {
-      if (startDate && endDate) {
-        dispatch(setDates({ startDate, endDate }));
-        setIsDateSelection(false);
+    if (!isSubmitting) {
+      if (isDateSelection) {
+        if (startDate && endDate) {
+          dispatch(setDates({ startDate, endDate }));
+          setIsDateSelection(false);
+        }
+      } else {
+        dispatch(setTripType(tripType));
+        setIsSubmitting(true);
       }
+    } else {
     }
   };
 
@@ -92,6 +105,12 @@ const Trip = () => {
               setEndDate={setEndDate}
             />
           )}
+          {!isDateSelection && (
+            <PurposeSelection
+              tripPurpose={tripType}
+              setTripPurpose={setTripType}
+            />
+          )}
 
           <Grid container justifyContent={"center"}>
             <Grid container item sm={10} justifyContent={"flex-end"}>
@@ -106,6 +125,7 @@ const Trip = () => {
           </Grid>
         </Grid>
       </div>
+      <Snackbar message={submissionErrorMessage} />
     </>
   );
 };
