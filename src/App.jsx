@@ -8,13 +8,13 @@ import { PersistGate } from "redux-persist/integration/react";
 
 function App() {
   const theme = useTheme();
-
   return (
     <>
       <div
         className="main"
         style={{
-          background: "linear-gradient(122deg, #F6F6F6 0%, #F2F3FF 95.15%);",
+          backgroundColor:
+            "linear-gradient(122deg, #F6F6F6 0%, #F2F3FF 95.15%)",
         }}
       >
         <Provider store={store}>

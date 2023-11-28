@@ -1,29 +1,35 @@
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { Button, Grid, useTheme } from "@mui/material";
+import { Button, Grid, useTheme, Backdrop } from "@mui/material";
 import React, { useState } from "react";
 import { geocodeByPlaceId } from "react-places-autocomplete";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Header, LocationSearchBar, Snackbar } from "../../components";
-import { setTrip, setDates } from "../../store/slices";
+import {
+  setTrip,
+  setDates,
+  setTripPurpose,
+  setItinerary,
+} from "../../store/slices";
 import TripImage from "../../utils/images/TripImage.png";
 import DateSelection from "./DateSelection/DateSelection";
-import { useTripService } from "../../hooks";
+import { generateTrip } from "../../services";
 import PurposeSelection from "./PurposeSelection/PurposeSelection";
-
+import dayjs from "dayjs";
+import { InfinitySpin } from "react-loader-spinner";
 const Trip = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [isDateSelection, setIsDateSelection] = useState(true);
   const [startDate, setStartDate] = useState("Start Date");
   const [endDate, setEndDate] = useState("End Date");
-  const [tripType, setTripType] = useState();
+  const [tripType, setTripType] = useState("");
+  const [errorMessage, setErrorMessage] = useState();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submissionErrorMessage, setSubmissionErrorMessage] = useState();
   const trip = useSelector((state) => state.trip);
   const navigate = useNavigate();
   const theme = useTheme();
   const dispatch = useDispatch();
-  const generateTrip = useTripService();
+  // const generateTripHandler = generateTrip();
 
   const handleSelect = (address, placeId) => {
     // Fetch location details by place ID
@@ -58,17 +64,35 @@ const Trip = () => {
   };
 
   const handleNextClick = () => {
-    if (!isSubmitting) {
-      if (isDateSelection) {
-        if (startDate && endDate) {
-          dispatch(setDates({ startDate, endDate }));
-          setIsDateSelection(false);
-        }
-      } else {
-        dispatch(setTripType(tripType));
-        setIsSubmitting(true);
+    if (isDateSelection) {
+      if (startDate && endDate) {
+        dispatch(setDates({ startDate, endDate }));
+        setIsDateSelection(false);
       }
-    } else {
+    }
+  };
+
+  const handleSubmit = async () => {
+    dispatch(setTripPurpose({ tripType }));
+    try {
+      setIsSubmitting(true);
+      const numberOfDays = dayjs(trip.endDate).diff(trip.startDate, "day");
+      const placesToVisit = numberOfDays * 3;
+      const response = await generateTrip({
+        uid: "ixtsgm3xUQcdCak73O6Y22uoXhb2",
+        destination: trip.name,
+        startDate: dayjs(trip.startDate).format("DD/MM/YYYY"),
+        endDate: dayjs(trip.endDate).format("DD/MM/YYYY"),
+        tripType: trip.tripType,
+        numberOfDays,
+        placesToVisit,
+      });
+
+      dispatch(setItinerary(JSON.parse(response.itinerary)));
+      setIsSubmitting(false);
+      navigate("/itinerary");
+    } catch (error) {
+      <Snackbar message={error?.response?.data?.message} />;
     }
   };
 
@@ -113,19 +137,34 @@ const Trip = () => {
           )}
 
           <Grid container justifyContent={"center"}>
-            <Grid container item sm={10} justifyContent={"flex-end"}>
-              <Button
-                variant="contained"
-                endIcon={<NavigateNextIcon />}
-                onClick={handleNextClick}
-              >
-                Next
-              </Button>
+            <Grid container item sm={11.5} justifyContent={"flex-end"}>
+              {isDateSelection && (
+                <Button
+                  variant="contained"
+                  endIcon={<NavigateNextIcon />}
+                  onClick={handleNextClick}
+                  sx={{ padding: "15px" }}
+                >
+                  Next
+                </Button>
+              )}
+              {!isDateSelection && (
+                <Button
+                  variant="contained"
+                  endIcon={<NavigateNextIcon />}
+                  onClick={handleSubmit}
+                  sx={{ padding: "15px" }}
+                >
+                  Next
+                </Button>
+              )}
             </Grid>
           </Grid>
         </Grid>
+        <Backdrop open={isSubmitting}>
+          <InfinitySpin width="200" color={theme.palette.secondary.main} />
+        </Backdrop>
       </div>
-      <Snackbar message={submissionErrorMessage} />
     </>
   );
 };

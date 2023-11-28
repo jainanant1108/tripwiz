@@ -8,3 +8,6 @@ export { default as AdventureIcon } from "./AdventureIcon";
 export { default as EnjoymentIcon } from "./EnjoymentIcon";
 export { default as LeisureIcon } from "./LeisureIcon";
 export { default as ExplorationIcon } from "./ExplorationIcon";
+export { default as SunIcon } from "./SunIcon";
+export { default as AccordionIcon } from "./AccordionIcon";
+export { default as KeyboardArrowUpIcon } from "./KeyboardArrowUpIcon";

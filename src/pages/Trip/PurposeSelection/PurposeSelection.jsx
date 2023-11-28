@@ -21,7 +21,7 @@ const PurposeSelection = ({ tripPurpose, setTripPurpose }) => {
     setTripPurpose(nextView);
   };
   return (
-    <Grid container columnGap={theme.spacing(2)}>
+    <Grid container gap={theme.spacing(10)}>
       <Grid
         container
         item
@@ -70,8 +70,8 @@ const PurposeSelection = ({ tripPurpose, setTripPurpose }) => {
           }}
         >
           <ToggleButton
-            value={"Adventure"}
-            aria-label={"Adventure"}
+            value={"adventurous"}
+            aria-label={"adventurous"}
             sx={{
               display: "flex",
               justifyContent: "center",
@@ -92,8 +92,8 @@ const PurposeSelection = ({ tripPurpose, setTripPurpose }) => {
             </Grid>
           </ToggleButton>
           <ToggleButton
-            value={"Leisure"}
-            aria-label={"Leisure"}
+            value={"leisure"}
+            aria-label={"leisure"}
             sx={{
               display: "flex",
               justifyContent: "center",
@@ -114,8 +114,8 @@ const PurposeSelection = ({ tripPurpose, setTripPurpose }) => {
             </Grid>
           </ToggleButton>
           <ToggleButton
-            value={"Exploration"}
-            aria-label={"Exploration"}
+            value={"exploration"}
+            aria-label={"exploration"}
             sx={{
               display: "flex",
               justifyContent: "center",
@@ -136,8 +136,8 @@ const PurposeSelection = ({ tripPurpose, setTripPurpose }) => {
             </Grid>
           </ToggleButton>
           <ToggleButton
-            value={"Enjoyment"}
-            aria-label={"Enjoyment"}
+            value={"enjoyment"}
+            aria-label={"enjoyment"}
             sx={{
               display: "flex",
               justifyContent: "center",

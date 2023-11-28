@@ -17,11 +17,11 @@ const tripSlice = createSlice({
       state.startDate = action.payload.startDate;
       state.endDate = action.payload.endDate;
     },
-    setTripType: (state, action) => {
-      state.tripType = action.payload;
+    setTripPurpose: (state, action) => {
+      state.tripType = action.payload.tripType;
     },
   },
 });
 
-export const { setTrip, setDates, setTripType } = tripSlice.actions;
+export const { setTrip, setDates, setTripPurpose } = tripSlice.actions;
 export default tripSlice.reducer;

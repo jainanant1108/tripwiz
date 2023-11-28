@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { RangePicker as ReactRangePicker } from "react-trip-date";
 import dayjs from "dayjs";
+import { useTheme } from "@mui/material";
 
 const Calendar = ({
   initialRangeValuesProps,
@@ -9,7 +10,7 @@ const Calendar = ({
   setOnRangeDateInScreen,
 }) => {
   const [rangeValues, setRangeValues] = useState(initialRangeValuesProps);
-
+  const theme = useTheme();
   useEffect(() => {
     setRangeValues(initialRangeValuesProps);
   }, [initialRangeValuesProps]);
@@ -29,7 +30,6 @@ const Calendar = ({
   const onChange = (e) => {
     setRangeValues(e);
     onRangeChange(e);
-    console.log(e);
   };
 
   return (
@@ -40,6 +40,7 @@ const Calendar = ({
         initialRangeValuesProps?.from &&
         dayjs(initialRangeValuesProps?.from).add(5, "days")
       }
+      autoResponsive={true}
     />
   );
 };

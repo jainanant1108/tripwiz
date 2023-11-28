@@ -5,3 +5,6 @@ export { default as Snackbar } from "./Snackbar/Snackbar";
 export { default as LocationSearchBar } from "./LocationSearchBar/LocationSearchBar";
 export { default as Calendar } from "./Calendar/Calendar";
 export { default as ToggleGroup } from "./ToggleGroup/ToggleGroup";
+export { default as TripDisplay } from "./TripDisplay/TripDisplay";
+export { default as Chip } from "./Chip/Chip";
+export { default as Accordion } from "./Accordion/Accordion";

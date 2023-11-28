@@ -3,7 +3,7 @@ import { IconButton, Snackbar } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 const SnackbarComponent = ({ message }) => {
-  const [open, setOpen] = useState(message ? true : false);
+  const [open, setOpen] = useState(true);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
