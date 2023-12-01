@@ -1,12 +1,21 @@
 import { Grid, Typography, useTheme } from "@mui/material";
-import React from "react";
-import { Button } from "../../components";
+import { useState } from "react";
+import { Button, Snackbar } from "../../components";
 import { Logo } from "../../utils/images";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../../services";
+import { resetItinerary, resetTrip, resetUser } from "../../store/slices";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const theme = useTheme();
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
   const uid = useSelector((state) => state.user.uid);
+  const userDetails = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleLoginCLick = () => {
     window.location.href = "/login";
   };
@@ -16,6 +25,27 @@ const Header = () => {
   const handleSavedTripsClick = () => {
     window.location.href = "saved-trips";
   };
+
+  const handleSignoutClick = async () => {
+    try {
+      await logoutUser({ uid });
+      dispatch(resetUser());
+      dispatch(resetItinerary());
+      dispatch(resetTrip());
+      navigate("/", { replace: true });
+    } catch (error) {
+      setMessage("Error while signing out. Please try again later");
+      setOpen(true);
+    }
+  };
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
     <Grid container flexWrap={"nowrap"}>
       <Grid container lg={4} gap={theme.spacing(5)}>
@@ -36,26 +66,16 @@ const Header = () => {
         justifyContent={"center"}
         alignItems={"center"}
       >
-        {uid && (
-          <>
-            <Grid item>
-              <Button
-                id="savedTrips"
-                variant="link"
-                onClick={handleSavedTripsClick}
-                label="Saved Trips"
-              />
-            </Grid>
-            <Grid item>
-              <Button
-                id="yourLocation"
-                variant="link"
-                onClick={() => {}}
-                label="Your Location"
-              />
-            </Grid>
-          </>
-        )}
+        {uid ? (
+          <Grid item>
+            <Button
+              id="savedTrips"
+              variant="link"
+              onClick={handleSavedTripsClick}
+              label="Saved Trips"
+            />
+          </Grid>
+        ) : null}
       </Grid>
 
       <Grid
@@ -86,7 +106,29 @@ const Header = () => {
             </Grid>
           </>
         )}
+        {uid && (
+          <>
+            <Grid item>
+              <Typography
+                fontSize={"18px"}
+                color={theme.palette.error.main}
+                fontFamily={"Recursive"}
+              >
+                {"Hello, " + userDetails?.displayName}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Button
+                id="signout"
+                variant="link"
+                onClick={handleSignoutClick}
+                label="Signout"
+              />
+            </Grid>
+          </>
+        )}
       </Grid>
+      <Snackbar open={open} handleClose={handleClose} message={message} />
     </Grid>
   );
 };

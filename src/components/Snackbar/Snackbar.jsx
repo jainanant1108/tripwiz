@@ -1,28 +1,17 @@
 import React, { useState } from "react";
-import { IconButton, Snackbar } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { Alert, Snackbar } from "@mui/material";
 
-const SnackbarComponent = ({ message, open, handleClose }) => {
+const SnackbarComponent = ({ message, open, handleClose, severity }) => {
   return (
-    <Snackbar
-      key={message}
-      open={open}
-      autoHideDuration={6000}
-      onClose={handleClose}
-      message={message}
-      action={
-        <React.Fragment>
-          <IconButton
-            aria-label="close"
-            color="inherit"
-            sx={{ p: 0.5 }}
-            onClick={handleClose}
-          >
-            <CloseIcon />
-          </IconButton>
-        </React.Fragment>
-      }
-    />
+    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Alert
+        onClose={handleClose}
+        severity={severity || "error"}
+        sx={{ width: "100%" }}
+      >
+        {message}
+      </Alert>
+    </Snackbar>
   );
 };
 

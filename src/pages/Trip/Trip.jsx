@@ -37,6 +37,7 @@ const Trip = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [open, setOpen] = useState(false);
   const trip = useSelector((state) => state.trip);
+  const uid = useSelector((state) => state.user.uid);
   const navigate = useNavigate();
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -93,18 +94,18 @@ const Trip = () => {
   };
 
   const handleSubmit = async () => {
-    dispatch(setTripPurpose({ tripType }));
+    dispatch(setTripPurpose({ tripType: tripType }));
     if (tripType !== "") {
       try {
         setIsSubmitting(true);
         const numberOfDays = dayjs(trip.endDate).diff(trip.startDate, "day");
         const placesToVisit = numberOfDays * 3;
         const response = await generateTrip({
-          uid: "ixtsgm3xUQcdCak73O6Y22uoXhb2",
+          uid: uid,
           destination: trip.name,
           startDate: dayjs(trip.startDate).format("DD/MM/YYYY"),
           endDate: dayjs(trip.endDate).format("DD/MM/YYYY"),
-          tripType: trip.tripType,
+          tripType: tripType,
           numberOfDays,
           placesToVisit,
         });

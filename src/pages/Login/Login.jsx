@@ -13,9 +13,9 @@ import {
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import ButtonComponent from "../../components/Button/Button";
-import { loginUser } from "../../services";
+import { getUserDetails, loginUser } from "../../services";
 import { useDispatch } from "react-redux";
-import { setUID } from "../../store/slices";
+import { setUID, setUser } from "../../store/slices";
 import { Snackbar } from "../../components";
 
 const Login = () => {
@@ -75,6 +75,17 @@ const Login = () => {
       console.log("user", user);
       navigate("/", { replace: true });
       dispatch(setUID(user?.uid));
+      const userDetails = await getUserDetails({
+        uid: user?.uid,
+      });
+      console.log(userDetails);
+      dispatch(
+        setUser({
+          displayName: userDetails.displayName,
+          username: userDetails.username,
+          uid: user.uid,
+        })
+      );
       // The user is signed up.
     } catch (error) {
       console.log(error);
@@ -285,7 +296,13 @@ const Login = () => {
               </Grid>
             </Grid>
             <Grid container lg={5.5}>
-              <img src={LoginImage} alt="" srcset="" width={"100%"} />
+              <img
+                src={LoginImage}
+                alt=""
+                srcset=""
+                width={"100%"}
+                height={"100vh"}
+              />
             </Grid>
           </Grid>
           <Snackbar open={open} handleClose={handleClose} message={message} />

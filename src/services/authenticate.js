@@ -13,3 +13,10 @@ export const loginUser = async (user) => {
 
   return response?.data;
 };
+
+export const logoutUser = async (user) => {
+  const tripUrl = `authenticate/logout`;
+  const response = await tripApi.post(`${tripUrl}`, user);
+
+  return response?.data;
+};

@@ -9,6 +9,7 @@ const Itinerary = () => {
   const [open, setOpen] = useState(false);
   const { trip_details } = useSelector((state) => state.itinerary.itinerary);
   const [isTripSaved, setIsTripSaved] = useState(false);
+  const uid = useSelector((state) => state.user.uid);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -19,7 +20,7 @@ const Itinerary = () => {
   const handleSaveClick = async () => {
     try {
       const response = await saveTrip({
-        uid: "ixtsgm3xUQcdCak73O6Y22uoXhb2",
+        uid,
       });
       setIsTripSaved(true);
     } catch (error) {

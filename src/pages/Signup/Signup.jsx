@@ -55,7 +55,6 @@ const Signup = () => {
       const user = await signupUser({
         username: formData?.email,
         password: formData?.password,
-        dateOfBirth: "15/10/1997",
         displayName: formData?.firstName.concat(" ", formData?.lastName),
       });
       console.log(user);
