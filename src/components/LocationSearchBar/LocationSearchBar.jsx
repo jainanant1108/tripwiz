@@ -22,7 +22,8 @@ const LocationSearchBar = ({ handleSelect, initialValue }) => {
               <TextField
                 {...getInputProps(params)}
                 placeholder="Where would you like to go ?"
-                sx={{ background: "#f6f6f6" }}
+                sx={{ background: "#f6f6f6", border: "none" }}
+                className="hi"
               />
             );
           }}

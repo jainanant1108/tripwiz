@@ -2,9 +2,11 @@ import { Grid, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { Button } from "../../components";
 import { Logo } from "../../utils/images";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const theme = useTheme();
+  const uid = useSelector((state) => state.user.uid);
   const handleLoginCLick = () => {
     window.location.href = "/login";
   };
@@ -15,7 +17,7 @@ const Header = () => {
     window.location.href = "saved-trips";
   };
   return (
-    <Grid container>
+    <Grid container flexWrap={"nowrap"}>
       <Grid container lg={4} gap={theme.spacing(5)}>
         <Logo />
         <Typography
@@ -34,23 +36,28 @@ const Header = () => {
         justifyContent={"center"}
         alignItems={"center"}
       >
-        <Grid item>
-          <Button
-            id="savedTrips"
-            variant="link"
-            onClick={handleSavedTripsClick}
-            label="Saved Trips"
-          />
-        </Grid>
-        <Grid item>
-          <Button
-            id="yourLocation"
-            variant="link"
-            onClick={() => {}}
-            label="Your Location"
-          />
-        </Grid>
+        {uid && (
+          <>
+            <Grid item>
+              <Button
+                id="savedTrips"
+                variant="link"
+                onClick={handleSavedTripsClick}
+                label="Saved Trips"
+              />
+            </Grid>
+            <Grid item>
+              <Button
+                id="yourLocation"
+                variant="link"
+                onClick={() => {}}
+                label="Your Location"
+              />
+            </Grid>
+          </>
+        )}
       </Grid>
+
       <Grid
         container
         flex
@@ -59,22 +66,26 @@ const Header = () => {
         justifyContent={"flex-end"}
         alignItems={"center"}
       >
-        <Grid item>
-          <Button
-            id="login"
-            variant="secondary"
-            onClick={handleLoginCLick}
-            label="Login"
-          />
-        </Grid>
-        <Grid item>
-          <Button
-            id="signUp"
-            variant="primary"
-            onClick={handleSignupCLick}
-            label="Sign up"
-          />
-        </Grid>
+        {!uid && (
+          <>
+            <Grid item>
+              <Button
+                id="login"
+                variant="secondary"
+                onClick={handleLoginCLick}
+                label="Login"
+              />
+            </Grid>
+            <Grid item>
+              <Button
+                id="signUp"
+                variant="primary"
+                onClick={handleSignupCLick}
+                label="Sign up"
+              />
+            </Grid>
+          </>
+        )}
       </Grid>
     </Grid>
   );

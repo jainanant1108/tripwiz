@@ -1,21 +1,27 @@
 import { Button, Grid, TextField, Typography, useTheme } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { FacebookIcon, GoogleIcon, Logo } from "../../utils/images";
 import SignUpImage from "../../utils/images/SignupImage.png";
 // import { Button } from "../../components";
 import {
   FacebookAuthProvider,
   GoogleAuthProvider,
-  createUserWithEmailAndPassword,
   getAuth,
   signInWithPopup,
 } from "firebase/auth";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import ButtonComponent from "../../components/Button/Button";
+import { Snackbar } from "../../components";
+import { signupUser } from "../../services";
+import { useDispatch } from "react-redux";
+import { setUID } from "../../store/slices";
 
 const Signup = () => {
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const methods = useForm({
     mode: "onBlur",
   });
@@ -33,45 +39,41 @@ const Signup = () => {
         // User is signed in with Google.
         const user = result.user;
         console.log("User logged in:", user);
-        navigate("/", { replace: true });
-
+        navigate("/login", { replace: true });
         // You can now redirect the user or perform further actions.
       })
       .catch((error) => {
         // Handle errors here.
+        setMessage("Error while signing up with google");
+        setOpen(true);
         console.error(error);
       });
   };
 
-  const handleSignInWithFacebook = async () => {
-    const auth = getAuth();
-
-    const provider = new FacebookAuthProvider();
+  const onSubmit = async (formData) => {
     try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      console.log("User logged in with Facebook:", user);
-      navigate("/", { replace: true });
+      const user = await signupUser({
+        username: formData?.email,
+        password: formData?.password,
+        dateOfBirth: "15/10/1997",
+        displayName: formData?.firstName.concat(" ", formData?.lastName),
+      });
+      console.log(user);
+      navigate("/login", { replace: true });
 
-      // You can redirect or perform further actions with the user.
+      // The user is signed up.
     } catch (error) {
-      console.error("Error signing in with Facebook:", error);
+      setMessage("Error while signing up. Please try again later.");
+      setOpen(true);
     }
   };
 
-  const onSubmit = async (formData) => {
-    try {
-      const auth = getAuth();
-      await createUserWithEmailAndPassword(
-        auth,
-        formData?.email,
-        formData?.password
-      );
-      navigate("/", { replace: true });
-      // The user is signed up.
-    } catch (error) {
-      console.log(error.message);
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
     }
+
+    setOpen(false);
   };
 
   return (
@@ -87,6 +89,7 @@ const Signup = () => {
               lg={5.5}
               flexDirection={"column"}
               gap={theme.spacing(10)}
+              justifyContent={"space-evenly"}
             >
               <Grid item>
                 <Grid
@@ -318,35 +321,9 @@ const Signup = () => {
                   </Typography>
                 </Button>
               </Grid>
-              <Grid container justifyContent={"center"}>
-                <Button
-                  id="facebookSigning"
-                  sx={{
-                    width: "90%",
-                    background: theme.palette.primary.main,
-                    borderRadius: "15px",
-                    boxShadow: "4px 4px 10px 5px rgba(0, 0, 0, 0.07)",
-                    "&:hover": {
-                      background: theme.palette.primary.main,
-                    },
-                    p: `${theme.spacing(3)} 0px`,
-                  }}
-                  onClick={handleSignInWithFacebook}
-                >
-                  <FacebookIcon />
-                  <Typography
-                    fontFamily={"Poppins"}
-                    fontSize={theme.spacing(4)}
-                    fontWeight={600}
-                    marginLeft={theme.spacing(10)}
-                    color={theme.palette.secondary.main}
-                  >
-                    {"Continue with Facebook"}
-                  </Typography>
-                </Button>
-              </Grid>
             </Grid>
           </Grid>
+          <Snackbar open={open} handleClose={handleClose} message={message} />
         </div>
       </form>
     </FormProvider>

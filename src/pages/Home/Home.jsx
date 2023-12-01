@@ -35,7 +35,7 @@ function Home() {
         }
       })
       .catch((error) => {
-        <Snackbar me ssage={"Error fetching location details"} />;
+        <Snackbar message={"Error fetching location details"} />;
       });
   };
 

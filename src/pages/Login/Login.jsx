@@ -1,5 +1,5 @@
 import { Button, Grid, TextField, Typography, useTheme } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { FacebookIcon, GoogleIcon, Logo } from "../../utils/images";
 import LoginImage from "../../utils/images/LoginImage.png";
 // import { Button } from "../../components";
@@ -13,9 +13,16 @@ import {
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import ButtonComponent from "../../components/Button/Button";
+import { loginUser } from "../../services";
+import { useDispatch } from "react-redux";
+import { setUID } from "../../store/slices";
+import { Snackbar } from "../../components";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
   const methods = useForm({
     mode: "onBlur",
   });
@@ -61,22 +68,31 @@ const Login = () => {
 
   const onSubmit = async (formData) => {
     try {
-      const auth = getAuth();
-      const user = await signInWithEmailAndPassword(
-        auth,
-        formData?.email,
-        formData?.password
-      );
+      const user = await loginUser({
+        username: formData?.email,
+        password: formData?.password,
+      });
       console.log("user", user);
       navigate("/", { replace: true });
+      dispatch(setUID(user?.uid));
       // The user is signed up.
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
+      setMessage(error.response.data.message);
+      setOpen(true);
     }
   };
 
   const handleSignupClick = () => {
     navigate("/signup");
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
@@ -157,10 +173,6 @@ const Login = () => {
                     control={control}
                     rules={{
                       required: "Please enter password",
-                      minLength: {
-                        value: 8,
-                        message: "Password Should be Greater then 8 characters",
-                      },
                     }}
                     render={({ field }) => (
                       <TextField
@@ -251,14 +263,10 @@ const Login = () => {
                   </Button>
                 </Grid>
               </Grid>
-              <Grid
-                container
-                justifyContent={"center"}
-                gap={theme.spacing(2)}
-                flexDirection={"column"}
-              >
+              <Grid container gap={theme.spacing(2)} flexDirection={"column"}>
                 <Grid
-                  item
+                  container
+                  justifyContent={"center"}
                   sx={{
                     color: `${theme.palette.grey[100]}`,
                     fontSize: "18px",
@@ -267,7 +275,7 @@ const Login = () => {
                 >
                   {"Don’t have an account ?"}
                 </Grid>
-                <Grid item>
+                <Grid container justifyContent={"center"}>
                   <ButtonComponent
                     variant="link"
                     label={"Sign Up"}
@@ -280,6 +288,7 @@ const Login = () => {
               <img src={LoginImage} alt="" srcset="" width={"100%"} />
             </Grid>
           </Grid>
+          <Snackbar open={open} handleClose={handleClose} message={message} />
         </div>
       </form>
     </FormProvider>
