@@ -95,8 +95,8 @@ const ButtonComponent = ({
         sx={{
           ...sx,
           backgroundColor: theme.palette.primary.main,
-          padding: `${theme.spacing(2)} ${theme.spacing(6)}`,
-          borderRadius: "5px",
+          padding: `${theme.spacing(5)} ${theme.spacing(6)}`,
+          borderRadius: "10px",
         }}
       >
         <Label variant={variant} label={label} />

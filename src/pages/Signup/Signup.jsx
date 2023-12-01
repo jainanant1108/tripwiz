@@ -26,7 +26,7 @@ const Signup = () => {
   const theme = useTheme();
   const handleSignInWithGoogle = () => {
     const auth = getAuth(); // Get the Firebase Auth instance
-
+    console.log(auth);
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then((result) => {
@@ -116,6 +116,62 @@ const Signup = () => {
                 </Typography>
               </Grid>
               <Grid container gap={theme.spacing(6)}>
+                <Grid container columnSpacing={theme.spacing(5)}>
+                  <Grid item sm={12} md={6}>
+                    <Controller
+                      name="firstName"
+                      control={control}
+                      rules={{
+                        required: "Please enter First Name",
+                      }}
+                      render={({ field }) => (
+                        <TextField
+                          id="firstName"
+                          name="firstName"
+                          sx={{
+                            width: "100%",
+                          }}
+                          placeholder="First Name"
+                          type="text"
+                          field={field}
+                          value={field.value}
+                          inputRef={field.ref}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          error={errors?.firstName?.message}
+                          helperText={errors?.firstName?.message}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item sm={12} md={6}>
+                    <Controller
+                      name="lastName"
+                      control={control}
+                      rules={{
+                        required: "Please enter Last Name",
+                      }}
+                      render={({ field }) => (
+                        <TextField
+                          id="lastName"
+                          name="lastName"
+                          sx={{
+                            width: "100%",
+                          }}
+                          placeholder="Last Name"
+                          type="text"
+                          field={field}
+                          value={field.value}
+                          inputRef={field.ref}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          error={errors?.lastName?.message}
+                          helperText={errors?.lastName?.message}
+                        />
+                      )}
+                    />
+                  </Grid>
+                </Grid>
                 <Grid container justifyContent={"center"} lg={12}>
                   <Controller
                     name="email"
@@ -132,7 +188,7 @@ const Signup = () => {
                         id="email"
                         name="email"
                         sx={{
-                          width: "90%",
+                          width: "100%",
                         }}
                         placeholder="Email"
                         type="email"
@@ -173,7 +229,7 @@ const Signup = () => {
                         id="password"
                         name="password"
                         sx={{
-                          width: "90%",
+                          width: "100%",
                         }}
                         type="password"
                         autoComplete="current-password"
@@ -208,7 +264,7 @@ const Signup = () => {
                         id="confirmPassword"
                         name="confirmPassword"
                         sx={{
-                          width: "90%",
+                          width: "100%",
                         }}
                         type="password"
                         autoComplete=""

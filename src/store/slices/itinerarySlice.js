@@ -11,8 +11,11 @@ const itinerarySlice = createSlice({
     setItinerary: (state, action) => {
       state.itinerary = action.payload;
     },
+    resetItinerary: (state) => {
+      state.itinerary = initialState.itinerary;
+    },
   },
 });
 
-export const { setItinerary } = itinerarySlice.actions;
+export const { setItinerary, resetItinerary } = itinerarySlice.actions;
 export default itinerarySlice.reducer;

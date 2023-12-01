@@ -75,6 +75,10 @@ const Login = () => {
     }
   };
 
+  const handleSignupClick = () => {
+    navigate("/signup");
+  };
+
   return (
     <FormProvider {...methods}>
       <form noValidate onSubmit={methods.handleSubmit(onSubmit)}>
@@ -164,6 +168,7 @@ const Login = () => {
                         name="password"
                         sx={{
                           width: "90%",
+                          borderRadius: "20px",
                         }}
                         type="password"
                         autoComplete="current-password"
@@ -185,64 +190,90 @@ const Login = () => {
                   id={"login"}
                   label={"Login"}
                   variant={"primary"}
-                  sx={{ width: "90%" }}
+                  sx={{ width: "90%", padding: "20px" }}
                   labelFontSize={"24px"}
                   buttonType="submit"
                 />
               </Grid>
-              <Grid container justifyContent={"center"}>
-                <Button
-                  id="googleSigning"
-                  sx={{
-                    width: "90%",
-                    background: theme.palette.primary.main,
-                    borderRadius: "15px",
-                    boxShadow: "4px 4px 10px 5px rgba(0, 0, 0, 0.07)",
-                    "&:hover": {
+              <Grid container gap={theme.spacing(6)}>
+                <Grid container item justifyContent={"center"}>
+                  <Button
+                    id="googleSigning"
+                    sx={{
+                      width: "90%",
                       background: theme.palette.primary.main,
-                    },
-                    p: `${theme.spacing(3)} 0px`,
-                  }}
-                  onClick={handleSignInWithGoogle}
-                >
-                  <GoogleIcon />
-                  <Typography
-                    fontFamily={"Poppins"}
-                    fontSize={theme.spacing(4)}
-                    fontWeight={600}
-                    marginLeft={theme.spacing(10)}
-                    color={theme.palette.secondary.main}
+                      borderRadius: "15px",
+                      boxShadow: "4px 4px 10px 5px rgba(0, 0, 0, 0.07)",
+                      "&:hover": {
+                        background: theme.palette.primary.main,
+                      },
+                      p: `${theme.spacing(3)} 0px`,
+                    }}
+                    onClick={handleSignInWithGoogle}
                   >
-                    {"Continue with Google"}
-                  </Typography>
-                </Button>
+                    <GoogleIcon />
+                    <Typography
+                      fontFamily={"Poppins"}
+                      fontSize={theme.spacing(4)}
+                      fontWeight={600}
+                      marginLeft={theme.spacing(10)}
+                      color={theme.palette.secondary.main}
+                    >
+                      {"Continue with Google"}
+                    </Typography>
+                  </Button>
+                </Grid>
+                <Grid container item justifyContent={"center"}>
+                  <Button
+                    id="facebookSigning"
+                    sx={{
+                      width: "90%",
+                      background: theme.palette.primary.main,
+                      borderRadius: "15px",
+                      boxShadow: "4px 4px 10px 5px rgba(0, 0, 0, 0.07)",
+                      "&:hover": {
+                        background: theme.palette.primary.main,
+                      },
+                      p: `${theme.spacing(3)} 0px`,
+                    }}
+                    onClick={handleSignInWithFacebook}
+                  >
+                    <FacebookIcon />
+                    <Typography
+                      fontFamily={"Poppins"}
+                      fontSize={theme.spacing(4)}
+                      fontWeight={600}
+                      marginLeft={theme.spacing(10)}
+                      color={theme.palette.secondary.main}
+                    >
+                      {"Continue with Facebook"}
+                    </Typography>
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid container justifyContent={"center"}>
-                <Button
-                  id="facebookSigning"
+              <Grid
+                container
+                justifyContent={"center"}
+                gap={theme.spacing(2)}
+                flexDirection={"column"}
+              >
+                <Grid
+                  item
                   sx={{
-                    width: "90%",
-                    background: theme.palette.primary.main,
-                    borderRadius: "15px",
-                    boxShadow: "4px 4px 10px 5px rgba(0, 0, 0, 0.07)",
-                    "&:hover": {
-                      background: theme.palette.primary.main,
-                    },
-                    p: `${theme.spacing(3)} 0px`,
+                    color: `${theme.palette.grey[100]}`,
+                    fontSize: "18px",
+                    fontFamily: "Recursive",
                   }}
-                  onClick={handleSignInWithFacebook}
                 >
-                  <FacebookIcon />
-                  <Typography
-                    fontFamily={"Poppins"}
-                    fontSize={theme.spacing(4)}
-                    fontWeight={600}
-                    marginLeft={theme.spacing(10)}
-                    color={theme.palette.secondary.main}
-                  >
-                    {"Continue with Facebook"}
-                  </Typography>
-                </Button>
+                  {"Don’t have an account ?"}
+                </Grid>
+                <Grid item>
+                  <ButtonComponent
+                    variant="link"
+                    label={"Sign Up"}
+                    onClick={handleSignupClick}
+                  />
+                </Grid>
               </Grid>
             </Grid>
             <Grid container lg={5.5}>

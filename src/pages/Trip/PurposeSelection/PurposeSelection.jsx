@@ -67,6 +67,7 @@ const PurposeSelection = ({ tripPurpose, setTripPurpose }) => {
             gap: "50px",
             width: "100%",
             justifyContent: "space-between",
+            flexWrap: "wrap",
           }}
         >
           <ToggleButton

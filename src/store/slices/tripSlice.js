@@ -1,7 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  trip: null,
+  name: "",
+  lat: "",
+  lng: "",
+  startDate: "",
+  endDate: "",
+  tripType: "",
 };
 
 const tripSlice = createSlice({
@@ -20,8 +25,17 @@ const tripSlice = createSlice({
     setTripPurpose: (state, action) => {
       state.tripType = action.payload.tripType;
     },
+    resetTrip: (state) => {
+      state.name = initialState.name;
+      state.lat = initialState.lat;
+      state.lng = initialState.lng;
+      state.tripType = initialState.tripType;
+      state.startDate = initialState.startDate;
+      state.endDate = initialState.endDate;
+    },
   },
 });
 
-export const { setTrip, setDates, setTripPurpose } = tripSlice.actions;
+export const { setTrip, setDates, setTripPurpose, resetTrip } =
+  tripSlice.actions;
 export default tripSlice.reducer;

@@ -4,12 +4,13 @@ import React, { useState } from "react";
 import { geocodeByPlaceId } from "react-places-autocomplete";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { PAUSE, PERSIST, PURGE, FLUSH } from "redux-persist";
 import { Header, LocationSearchBar, Snackbar } from "../../components";
+import { resetTrip, setTrip } from "../../store/slices";
 import HomePageImage from "../../utils/images/HomePage.png";
 import HomePageSection1 from "../../utils/images/HomePageSection1.png";
 import HomePageSection2 from "../../utils/images/HomePageSection2.png";
 import "./Home.css";
-import { setTrip } from "../../store/slices";
 
 function Home() {
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -40,6 +41,7 @@ function Home() {
 
   const handleGoClick = () => {
     if (selectedLocation) {
+      dispatch(resetTrip());
       dispatch(setTrip(selectedLocation));
       navigate(
         `/${selectedLocation.name}/${selectedLocation.lat}/${selectedLocation.lng}`
