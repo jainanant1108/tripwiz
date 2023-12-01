@@ -296,13 +296,7 @@ const Login = () => {
               </Grid>
             </Grid>
             <Grid container lg={5.5}>
-              <img
-                src={LoginImage}
-                alt=""
-                srcset=""
-                width={"100%"}
-                height={"100vh"}
-              />
+              <img src={LoginImage} alt="" srcset="" width={"100%"} />
             </Grid>
           </Grid>
           <Snackbar open={open} handleClose={handleClose} message={message} />
