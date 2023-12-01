@@ -2,15 +2,7 @@ import React, { useState } from "react";
 import { IconButton, Snackbar } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-const SnackbarComponent = ({ message }) => {
-  const [open, setOpen] = useState(true);
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-  };
+const SnackbarComponent = ({ message, open, handleClose }) => {
   return (
     <Snackbar
       key={message}

@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 import ChipComponent from "../Chip/Chip";
 import { Accordion } from "..";
 
-const TripDisplay = ({ trip, handleSaveClick }) => {
+const TripDisplay = ({ trip, handleSaveClick, isTripSaved }) => {
   const theme = useTheme();
   console.log(trip.start_date);
   console.log(dayjs(trip.start_date, "DD/MM/YYYY").format("DD MMMM, YYYY"));
@@ -48,7 +48,7 @@ const TripDisplay = ({ trip, handleSaveClick }) => {
             onClick={handleSaveClick}
             sx={{ padding: "16px 20px" }}
           >
-            Save Itinerary
+            {isTripSaved ? "Saved" : "Save Itinerary"}
           </Button>
         </Grid>
       </Grid>

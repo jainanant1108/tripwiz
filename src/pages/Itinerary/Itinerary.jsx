@@ -1,14 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Header, TripDisplay } from "../../components";
+import { Header, Snackbar, TripDisplay } from "../../components";
 import TripImage from "../../utils/images/TripImage.png";
+import { saveTrip } from "../../services";
 
 const Itinerary = () => {
   const [placeImage, setPlaceImage] = useState(null);
+  const [open, setOpen] = useState(false);
   const { trip_details } = useSelector((state) => state.itinerary.itinerary);
-  console.log(trip_details);
-  const handleSaveClick = () => {
-    console.log("here");
+  const [isTripSaved, setIsTripSaved] = useState(false);
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+  const handleSaveClick = async () => {
+    try {
+      const response = await saveTrip({
+        uid: "ixtsgm3xUQcdCak73O6Y22uoXhb2",
+      });
+      setIsTripSaved(true);
+    } catch (error) {
+      setOpen(true);
+      return (
+        <Snackbar
+          message={error?.response?.data?.message}
+          open={open}
+          handleClose={handleClose}
+        />
+      );
+    }
   };
   const getPlaceImage = async (place) => {
     const apiKey = "YOUR_GOOGLE_MAPS_API_KEY"; // Replace with your API key
@@ -53,7 +76,11 @@ const Itinerary = () => {
       </div>
       <img src={TripImage} alt="" style={{ width: "100vw" }} />
       <div className="container">
-        <TripDisplay trip={trip_details} handleSaveClick={handleSaveClick} />
+        <TripDisplay
+          trip={trip_details}
+          handleSaveClick={handleSaveClick}
+          isTripSaved={isTripSaved}
+        />
       </div>
     </>
   );

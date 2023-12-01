@@ -11,6 +11,9 @@ const Header = () => {
   const handleSignupCLick = () => {
     window.location.href = "/signup";
   };
+  const handleSavedTripsClick = () => {
+    window.location.href = "saved-trips";
+  };
   return (
     <Grid container>
       <Grid container lg={4} gap={theme.spacing(5)}>
@@ -35,7 +38,7 @@ const Header = () => {
           <Button
             id="savedTrips"
             variant="link"
-            onClick={() => {}}
+            onClick={handleSavedTripsClick}
             label="Saved Trips"
           />
         </Grid>

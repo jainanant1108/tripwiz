@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, Login, Signup, Trip, Itinerary } from "./pages";
+import { Home, Login, Signup, Trip, Itinerary, SavedTrips } from "./pages";
 
 function Approuter() {
   return (
@@ -12,6 +12,7 @@ function Approuter() {
         <Route path="/signup" element=<Signup /> />
         <Route path="/:placeName/:lat/:long" element=<Trip /> />
         <Route path="/itinerary" element=<Itinerary /> />
+        <Route path="/saved-trips" element=<SavedTrips /> />
       </Routes>
     </BrowserRouter>
   );
