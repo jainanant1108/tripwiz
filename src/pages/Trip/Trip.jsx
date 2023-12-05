@@ -43,27 +43,12 @@ const Trip = () => {
   const dispatch = useDispatch();
   // const generateTripHandler = generateTrip();
 
-  const handleSelect = (address, placeId) => {
-    // Fetch location details by place ID
-    geocodeByPlaceId(placeId)
-      .then((results) => {
-        if (results && results[0]) {
-          const location = results[0];
+  const handleSelect = (address) => {
+    console.log(address);
 
-          // Extract latitude and longitude
-          const lat = location.geometry.location.lat();
-          const lng = location.geometry.location.lng();
-
-          setSelectedLocation({
-            name: address,
-            lat: lat,
-            lng: lng,
-          });
-        }
-      })
-      .catch((error) => {
-        <Snackbar message={"Error fetching location details"} />;
-      });
+    setSelectedLocation({
+      name: address?.formatted_address,
+    });
   };
 
   const handleGoClick = () => {
@@ -149,22 +134,13 @@ const Trip = () => {
       <img src={TripImage} alt="" style={{ maxWidth: "100vw" }} />
       <div className="container">
         <Grid container gap={theme.spacing(6)}>
-          <Grid container justifyContent={"space-evenly"}>
-            <Grid item sm={10}>
-              <LocationSearchBar
-                handleSelect={handleSelect}
-                initialValue={trip?.name}
-              />
-            </Grid>
-            <Grid container item sm={1} justifyContent={"flex-end"}>
-              <Button
-                variant="contained"
-                endIcon={<NavigateNextIcon />}
-                onClick={handleGoClick}
-              >
-                Go
-              </Button>
-            </Grid>
+          <Grid container justifyContent={"center"}>
+            <LocationSearchBar
+              handleSelect={handleSelect}
+              initialValue={trip?.name}
+              handleGoClick={handleGoClick}
+              defaultValue={trip?.name}
+            />
           </Grid>
           {isDateSelection && (
             <DateSelection

@@ -2,8 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   name: "",
-  lat: "",
-  lng: "",
   startDate: "",
   endDate: "",
   tripType: "",
@@ -15,8 +13,6 @@ const tripSlice = createSlice({
   reducers: {
     setTrip: (state, action) => {
       state.name = action.payload.name;
-      state.lat = action.payload.lat;
-      state.lng = action.payload.lng;
     },
     setDates: (state, action) => {
       state.startDate = action.payload.startDate;
@@ -27,8 +23,6 @@ const tripSlice = createSlice({
     },
     resetTrip: (state) => {
       state.name = initialState.name;
-      state.lat = initialState.lat;
-      state.lng = initialState.lng;
       state.tripType = initialState.tripType;
       state.startDate = initialState.startDate;
       state.endDate = initialState.endDate;

@@ -14,38 +14,23 @@ import "./Home.css";
 
 function Home() {
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [address, setAddress] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const handleSelect = (address, placeId) => {
+  const handleSelect = (address) => {
+    console.log(address);
     // Fetch location details by place ID
-    geocodeByPlaceId(placeId)
-      .then((results) => {
-        if (results && results[0]) {
-          const location = results[0];
 
-          // Extract latitude and longitude
-          const lat = location.geometry.location.lat();
-          const lng = location.geometry.location.lng();
-
-          setSelectedLocation({
-            name: address,
-            lat: lat,
-            lng: lng,
-          });
-        }
-      })
-      .catch((error) => {
-        <Snackbar message={"Error fetching location details"} />;
-      });
+    setSelectedLocation({
+      name: address?.formatted_address,
+    });
   };
 
   const handleGoClick = () => {
     if (selectedLocation) {
       dispatch(resetTrip());
       dispatch(setTrip(selectedLocation));
-      navigate(
-        `/${selectedLocation.name}/${selectedLocation.lat}/${selectedLocation.lng}`
-      );
+      navigate(`/${selectedLocation.name}`);
     }
   };
 
@@ -54,71 +39,85 @@ function Home() {
     <>
       <div className="container">
         <Header />
-        <Grid m={`${theme.spacing(5)} 0px`}>
-          <Grid container justifyContent={"space-between"}>
+        <Grid
+          container
+          m={`${theme.spacing(5)} 0px`}
+          gap={{ sm: "20px", md: "0px" }}
+        >
+          <Grid
+            container
+            justifyContent={"space-between"}
+            gap={{ sm: "20px", md: "0px" }}
+            mt={{ sm: "20px" }}
+          >
             <Grid
               item
               container
-              sm={4}
+              sm={12}
+              md={4}
               justifyContent={"center"}
               alignItems={"center"}
             >
               <Typography
-                fontSize={{ sm: theme.spacing(3), md: theme.spacing(12) }}
+                fontSize={{ sm: theme.spacing(6), md: theme.spacing(12) }}
                 fontWeight={700}
               >
                 {"Fuel your imagined trip with "}
                 <span style={{ color: theme.palette.error.main }}>{"AI"}</span>
               </Typography>
             </Grid>
-            <Grid item sm={7}>
+            <Grid item sm={12} md={7}>
               <img src={HomePageImage} alt="" style={{ maxWidth: "100%" }} />
             </Grid>
           </Grid>
-          <Grid container>
-            <Grid item sm={11}>
-              <LocationSearchBar handleSelect={handleSelect} />
-            </Grid>
-            <Grid container item sm={1} justifyContent={"flex-end"}>
-              <Button
-                variant="contained"
-                endIcon={<NavigateNextIcon />}
-                onClick={handleGoClick}
-              >
-                Go
-              </Button>
-            </Grid>
+          <Grid
+            container
+            justifyContent={"center"}
+            mt={{ sm: "36px", md: "60px" }}
+          >
+            <LocationSearchBar
+              address={address}
+              setAddress={setAddress}
+              handleSelect={handleSelect}
+              handleGoClick={handleGoClick}
+            />
           </Grid>
-          <Grid container>
-            <Grid container sm={6} alignItems={"center"}>
+          <Grid
+            container
+            mt={{ sm: "36px", md: "60px" }}
+            gap={{ sm: "20px", md: "0px" }}
+          >
+            <Grid container sm={12} md={6} alignItems={"center"}>
               <Typography
-                fontSize={{ sm: theme.spacing(3), md: theme.spacing(12) }}
+                fontSize={{ sm: theme.spacing(5), md: theme.spacing(12) }}
                 fontWeight={600}
+                textAlign={{ sm: "center", md: "left" }}
               >
                 {"The endless possibilities encompassed in "}
                 <span style={{ color: theme.palette.error.main }}>{"AI "}</span>
                 {"possibility"}
               </Typography>
             </Grid>
-            <Grid item sm={6}>
+            <Grid item sm={12} md={6}>
               <img src={HomePageSection1} alt="" style={{ maxWidth: "100%" }} />
             </Grid>
           </Grid>
-          <Grid container>
-            <Grid item sm={6}>
+          <Grid container gap={{ sm: "20px", md: "0px" }}>
+            <Grid item sm={12} md={6}>
               <img src={HomePageSection2} alt="" style={{ maxWidth: "100%" }} />
             </Grid>
             <Grid
               item
               container
-              sm={6}
+              sm={12}
+              md={6}
               justifyItems={"flex-end"}
               alignItems={"center"}
             >
               <Typography
-                fontSize={{ sm: theme.spacing(3), md: theme.spacing(12) }}
+                fontSize={{ sm: theme.spacing(5), md: theme.spacing(12) }}
                 fontWeight={600}
-                textAlign={"end"}
+                textAlign={{ sm: "center", md: "end" }}
               >
                 {"Get your camera ready for some amazing Tripping!!"}
               </Typography>

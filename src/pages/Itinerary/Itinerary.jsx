@@ -3,13 +3,17 @@ import { useSelector } from "react-redux";
 import { Header, Snackbar, TripDisplay } from "../../components";
 import TripImage from "../../utils/images/TripImage.png";
 import { saveTrip } from "../../services";
+import { Backdrop, useTheme } from "@mui/material";
+import { InfinitySpin } from "react-loader-spinner";
 
 const Itinerary = () => {
   const [placeImage, setPlaceImage] = useState(null);
   const [open, setOpen] = useState(false);
   const { trip_details } = useSelector((state) => state.itinerary.itinerary);
+  const [tripSavedButton, setTripSavedButton] = useState(false);
   const [isTripSaved, setIsTripSaved] = useState(false);
   const uid = useSelector((state) => state.user.uid);
+  const theme = useTheme();
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -19,11 +23,15 @@ const Itinerary = () => {
   };
   const handleSaveClick = async () => {
     try {
+      setIsTripSaved(true);
       const response = await saveTrip({
         uid,
       });
-      setIsTripSaved(true);
+      setIsTripSaved(false);
+      setTripSavedButton(true);
     } catch (error) {
+      setIsTripSaved(false);
+
       setOpen(true);
       return (
         <Snackbar
@@ -35,13 +43,19 @@ const Itinerary = () => {
     }
   };
   const getPlaceImage = async (place) => {
-    const apiKey = "YOUR_GOOGLE_MAPS_API_KEY"; // Replace with your API key
+    const apiKey = "AIzaSyCf3nqGvk1Kikwyj7O88LV8tYtzCDz7Q4E"; // Replace with your API key
     const maxWidth = 400; // Set the maximum width of the image
 
     try {
+      const placePredectionResponse = await fetch(
+        `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${place}&fields=photos&key=${apiKey}`
+      );
+      console.log(placePredectionResponse);
+      const placeid = placePredectionResponse?.predictions[0]?.place_id;
       // Fetch place details including photo reference
       const placeDetailsResponse = await fetch(
-        `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place.placeId}&fields=photos&key=${apiKey}`
+        `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=photos&key=${apiKey}`,
+        { mode: "no-cors" }
       );
 
       const placeDetailsData = await placeDetailsResponse.json();
@@ -80,9 +94,13 @@ const Itinerary = () => {
         <TripDisplay
           trip={trip_details}
           handleSaveClick={handleSaveClick}
-          isTripSaved={isTripSaved}
+          isTripSaved={tripSavedButton}
+          getPlaceImage={getPlaceImage}
         />
       </div>
+      <Backdrop open={isTripSaved}>
+        <InfinitySpin width="200" color={theme.palette.secondary.main} />
+      </Backdrop>
     </>
   );
 };

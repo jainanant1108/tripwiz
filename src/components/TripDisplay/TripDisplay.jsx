@@ -1,4 +1,12 @@
-import { useTheme, Grid, Typography, Button, Stack, Box } from "@mui/material";
+import {
+  useTheme,
+  Grid,
+  Typography,
+  Button,
+  Stack,
+  Box,
+  useMediaQuery,
+} from "@mui/material";
 import React from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import {
@@ -6,14 +14,15 @@ import {
   SunIcon,
   KeyboardArrowUpIcon,
 } from "../../utils/images";
-import dayjs from "dayjs";
 import ChipComponent from "../Chip/Chip";
 import { Accordion } from "..";
 
-const TripDisplay = ({ trip, handleSaveClick, isTripSaved }) => {
+const TripDisplay = ({ trip, handleSaveClick, isTripSaved, getPlaceImage }) => {
   const theme = useTheme();
-  console.log(trip.start_date);
-  console.log(dayjs(trip.start_date, "DD/MM/YYYY").format("DD MMMM, YYYY"));
+  const mobileDevice = useMediaQuery((theme) =>
+    theme.breakpoints.between("sm", "md")
+  );
+
   return (
     <>
       <Grid
@@ -24,11 +33,15 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved }) => {
         boxShadow={"0px 4px 20px 7px rgba(0, 0, 0, 0.11)"}
         borderRadius={"20px"}
         justifyContent={"space-between"}
+        gap={{ sm: "20px", md: "0px" }}
       >
-        <Grid item sm={1}>
-          <SunIcon fontSize={"60px"} />
-        </Grid>
-        <Grid item container sm={9} alignItems={"center"}>
+        {!mobileDevice && (
+          <Grid item sm={2} md={1}>
+            <SunIcon fontSize={"60px"} />
+          </Grid>
+        )}
+
+        <Grid item container sm={12} md={9} alignItems={"center"}>
           <Typography
             fontSize={"20px"}
             fontWeight={600}
@@ -38,8 +51,9 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved }) => {
         <Grid
           container
           item
-          sm={2}
-          justifyContent={"flex-end"}
+          sm={12}
+          md={2}
+          justifyContent={{ sm: "flex-start", md: "flex-end" }}
           alignItems={"center"}
         >
           <Button
@@ -74,7 +88,13 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved }) => {
             >
               {"Includings"}
             </Typography>
-            <Stack direction="row" spacing={5} mt={"16px"}>
+            <Stack
+              direction="row"
+              spacing={5}
+              mt={"16px"}
+              flexWrap={"wrap"}
+              gap={"10px"}
+            >
               {trip.includings.map((including) => (
                 <ChipComponent label={including} />
               ))}
@@ -112,8 +132,9 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved }) => {
                       {day?.places?.map((place, index) => (
                         <Grid
                           container
-                          display={"inline-flex"}
                           justifyContent={"space-between"}
+                          flexWrap={"nowrap"}
+                          gap={"10px"}
                         >
                           <Box
                             sx={{
@@ -138,12 +159,18 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved }) => {
                               borderRadius: "10px",
                             }}
                             title={
-                              <Typography fontSize={"24px"} fontWeight={600}>
+                              <Typography
+                                fontSize={{ sm: "16px", md: "24px" }}
+                                fontWeight={600}
+                              >
                                 {place.name}
                               </Typography>
                             }
                           >
-                            <img />
+                            <img
+                              loading="lazy"
+                              src={getPlaceImage(place.name)}
+                            />
                             <Typography fontSize={"18px"} color={"#000"}>
                               {place?.description}
                             </Typography>
@@ -157,9 +184,16 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved }) => {
             ))}
           </Grid>
         </Grid>
-        <Grid container item sm={12} md={5} justifyContent={"flex-end"}>
+        <Grid
+          container
+          item
+          sm={12}
+          md={5}
+          justifyContent={"flex-end"}
+          mt={{ sm: "20px", md: "0px" }}
+        >
           <iframe
-            width="80%"
+            width="100%"
             height="400px"
             loading="lazy"
             allowfullscreen

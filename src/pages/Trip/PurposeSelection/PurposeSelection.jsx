@@ -4,9 +4,9 @@ import {
   useTheme,
   ToggleButtonGroup,
   ToggleButton,
+  useMediaQuery,
 } from "@mui/material";
 import React from "react";
-import { ToggleGroup } from "../../../components";
 import {
   AdventureIcon,
   LeisureIcon,
@@ -16,12 +16,15 @@ import {
 
 const PurposeSelection = ({ tripPurpose, setTripPurpose }) => {
   const theme = useTheme();
+  const mobileDevice = useMediaQuery((theme) =>
+    theme.breakpoints.between("sm", "md")
+  );
 
   const handleChange = (event, nextView) => {
     setTripPurpose(nextView);
   };
   return (
-    <Grid container gap={theme.spacing(10)}>
+    <Grid container gap={{ sm: theme.spacing(2), md: theme.spacing(10) }}>
       <Grid
         container
         item
@@ -33,8 +36,9 @@ const PurposeSelection = ({ tripPurpose, setTripPurpose }) => {
       >
         <Typography
           color={theme.palette.error.main}
-          fontSize={theme.spacing(6)}
+          fontSize={{ sm: theme.spacing(4), md: theme.spacing(6) }}
           fontWeight={600}
+          sx={{ textAlign: "center" }}
         >
           {"What are your expectations from this trip?"}
         </Typography>
@@ -50,8 +54,9 @@ const PurposeSelection = ({ tripPurpose, setTripPurpose }) => {
       >
         <Typography
           color={theme.palette.grey[100]}
-          fontSize={theme.spacing(4)}
+          fontSize={{ sm: theme.spacing(3), md: theme.spacing(4) }}
           fontWeight={600}
+          sx={{ textAlign: "center" }}
         >
           {"Choose your preferences for upcoming journey..."}
         </Typography>
@@ -66,7 +71,7 @@ const PurposeSelection = ({ tripPurpose, setTripPurpose }) => {
             display: "flex",
             gap: "50px",
             width: "100%",
-            justifyContent: "space-between",
+            justifyContent: mobileDevice ? "center" : "space-between",
             flexWrap: "wrap",
           }}
         >

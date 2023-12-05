@@ -1,4 +1,4 @@
-import { Grid, Typography, useTheme } from "@mui/material";
+import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import { Button, Snackbar } from "../../components";
 import { Logo } from "../../utils/images";
@@ -15,7 +15,9 @@ const Header = () => {
   const userDetails = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const mobileDevice = useMediaQuery((theme) =>
+    theme.breakpoints.between("sm", "md")
+  );
   const handleLoginCLick = () => {
     window.location.href = "/login";
   };
@@ -48,15 +50,17 @@ const Header = () => {
 
   return (
     <Grid container flexWrap={"nowrap"}>
-      <Grid container lg={4} gap={theme.spacing(5)}>
+      <Grid container lg={4} gap={theme.spacing(5)} alignItems={"center"}>
         <Logo />
-        <Typography
-          fontWeight={600}
-          fontFamily={"Poppins"}
-          fontSize={theme.spacing(9)}
-        >
-          TripWiz
-        </Typography>
+        {!mobileDevice && (
+          <Typography
+            fontWeight={600}
+            fontFamily={"Poppins"}
+            fontSize={theme.spacing(9)}
+          >
+            TripWiz
+          </Typography>
+        )}
       </Grid>
       <Grid
         container
@@ -85,6 +89,7 @@ const Header = () => {
         gap={theme.spacing(5)}
         justifyContent={"flex-end"}
         alignItems={"center"}
+        flexWrap={"nowrap"}
       >
         {!uid && (
           <>
@@ -94,6 +99,7 @@ const Header = () => {
                 variant="secondary"
                 onClick={handleLoginCLick}
                 label="Login"
+                fontSize={{ sm: "14px", md: "16px" }}
               />
             </Grid>
             <Grid item>
@@ -102,21 +108,26 @@ const Header = () => {
                 variant="primary"
                 onClick={handleSignupCLick}
                 label="Sign up"
+                fontSize={{ sm: "14px", md: "16px" }}
+                sx={{ textWrap: "nowrap" }}
               />
             </Grid>
           </>
         )}
         {uid && (
           <>
-            <Grid item>
-              <Typography
-                fontSize={"18px"}
-                color={theme.palette.error.main}
-                fontFamily={"Recursive"}
-              >
-                {"Hello, " + userDetails?.displayName}
-              </Typography>
-            </Grid>
+            {!mobileDevice && (
+              <Grid item>
+                <Typography
+                  fontSize={"18px"}
+                  color={theme.palette.error.main}
+                  fontFamily={"Recursive"}
+                >
+                  {"Hello, " + userDetails?.displayName}
+                </Typography>
+              </Grid>
+            )}
+
             <Grid item>
               <Button
                 id="signout"

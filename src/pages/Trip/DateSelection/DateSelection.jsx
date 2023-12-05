@@ -32,8 +32,9 @@ const DateSelection = ({ startDate, setStartDate, endDate, setEndDate }) => {
         >
           <Typography
             color={theme.palette.error.main}
-            fontSize={theme.spacing(6)}
+            fontSize={{ sm: theme.spacing(4), md: theme.spacing(6) }}
             fontWeight={600}
+            sx={{ textAlign: "center" }}
           >
             {"When do you want to start your awesome journey ?"}
           </Typography>
@@ -49,30 +50,40 @@ const DateSelection = ({ startDate, setStartDate, endDate, setEndDate }) => {
         >
           <Typography
             color={theme.palette.grey[100]}
-            fontSize={theme.spacing(4)}
+            fontSize={{ sm: theme.spacing(3), md: theme.spacing(4) }}
             fontWeight={600}
           >
-            {"Choose start and end date, up to 7 days"}
+            {"Choose start and end date, up to 5 days"}
           </Typography>
         </Grid>
       </Grid>
       <Grid container justifyContent={"center"}>
         <Grid
+          container
           item
           bgcolor={"#fff"}
           p={`${theme.spacing(6)} ${theme.spacing(10)}`}
           boxShadow={"10px 20px 50px 20px rgba(0, 0, 0, 0.06)"}
           borderRadius={"10px"}
-          sm={10}
+          sm={12}
+          md={10}
         >
-          <Grid container justifyContent={"space-between"}>
+          <Grid
+            container
+            justifyContent={"space-between"}
+            gap={{ sm: "10px", md: "0px" }}
+            flexWrap={{ sm: "wrap", md: "nowrap" }}
+          >
             <Grid
               item
               container
               gap={"28px"}
               fontSize={theme.spacing(4)}
               fontWeight={600}
-              sm={6}
+              sm={12}
+              md={6}
+              flexWrap={"nowrap"}
+              justifyContent={{ sm: "space-evenly", md: "normal" }}
             >
               <Grid item>{startDate}</Grid>
               <Grid>
@@ -80,7 +91,13 @@ const DateSelection = ({ startDate, setStartDate, endDate, setEndDate }) => {
               </Grid>
               <Grid item>{endDate}</Grid>
             </Grid>
-            <Grid item alignSelf={"center"}>
+            <Grid
+              item
+              container
+              justifyContent={{ sm: "center", md: "flex-end" }}
+              textAlign={"center"}
+              sm={12}
+            >
               {"Your exciting trip awaits your flag to start..."}
             </Grid>
           </Grid>

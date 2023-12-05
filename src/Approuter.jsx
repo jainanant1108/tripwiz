@@ -10,7 +10,7 @@ function Approuter() {
         <Route path="/" element=<Home /> />
         <Route path="/login" element=<Login /> />
         <Route path="/signup" element=<Signup /> />
-        <Route path="/:placeName/:lat/:long" element=<Trip /> />
+        <Route path="/:placeName" element=<Trip /> />
         <Route path="/itinerary" element=<Itinerary /> />
         <Route path="/saved-trips" element=<SavedTrips /> />
       </Routes>

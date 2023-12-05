@@ -1,40 +1,60 @@
-import { Autocomplete, TextField } from "@mui/material";
-import React, { useState } from "react";
-import PlacesAutocomplete from "react-places-autocomplete";
+import React from "react";
+import AutoComplete from "react-google-autocomplete";
+import { Grid, Button, useTheme, useMediaQuery } from "@mui/material";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import "./LocationSearchBar.css";
 
-const LocationSearchBar = ({ handleSelect, initialValue }) => {
-  const [address, setAddress] = useState(initialValue || "");
+const LocationSearchBar = ({ handleSelect, defaultValue, handleGoClick }) => {
+  const theme = useTheme();
+  const mobileDevice = useMediaQuery((theme) =>
+    theme.breakpoints.between("sm", "md")
+  );
   return (
-    <PlacesAutocomplete
-      value={address}
-      onChange={setAddress}
-      onSelect={handleSelect}
-      searchOptions={{ type: ["(cities)", "locality"] }}
-      debounce={300}
+    <Grid
+      container
+      maxWidth={{ sm: "100%", md: "70%" }}
+      justifyContent={"center"}
+      alignSelf={"center"}
+      width={"100%"}
+      flexWrap={{ md: "nowrap" }}
+      columnGap={{ sm: "0px", md: "40px" }}
+      p={{ sm: "10px", md: "25px 40px" }}
+      sx={{
+        boxShadow: "10px 20px 50px 20px rgba(0, 0, 0, 0.06)",
+        border: `1px solid ${theme.palette.primary.main}`,
+        background: theme.palette.secondary.main,
+        borderRadius: "20px",
+      }}
     >
-      {({ getInputProps, suggestions }) => (
-        <Autocomplete
-          options={suggestions}
-          getOptionLabel={(suggestion) => suggestion.description}
-          inputValue={address}
-          renderInput={(params) => {
-            return (
-              <TextField
-                {...getInputProps(params)}
-                placeholder="Where would you like to go ?"
-                sx={{ background: "#f6f6f6", border: "none" }}
-                className="hi"
-              />
-            );
+      <Grid container item sm={10}>
+        <AutoComplete
+          apiKey={"AIzaSyCf3nqGvk1Kikwyj7O88LV8tYtzCDz7Q4E"}
+          onPlaceSelected={handleSelect}
+          defaultValue={defaultValue}
+          style={{
+            border: "none",
+            width: "100%",
+            color: theme.palette.primary.main,
+            fontWeight: "600",
           }}
-          sx={{
-            background: "#f6f6f6",
-            borderRadius: "20px",
-            boxShadow: "10px 20px 50px 20px rgba(0, 0, 0, 0.06)",
-          }}
+          placeholder={
+            mobileDevice
+              ? "Where do you wanna go?"
+              : "Where would you like to go ?"
+          }
         />
-      )}
-    </PlacesAutocomplete>
+      </Grid>
+      <Grid container item sm={2} justifyContent={"flex-end"}>
+        <Button
+          variant="contained"
+          endIcon={<NavigateNextIcon />}
+          onClick={handleGoClick}
+          sx={{ padding: "10px 20px" }}
+        >
+          Go
+        </Button>
+      </Grid>
+    </Grid>
   );
 };
 

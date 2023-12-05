@@ -1,0 +1,14 @@
+.pac-target-input {
+  outline: none;
+  font-size: 18px;
+  background: transparent;
+}
+.pac-target-input::placeholder {
+  font-weight: 600;
+  color: #1b1b1b;
+}
+@media only screen and (max-width: 768px) {
+  .pac-target-input {
+    font-size: 16px;
+  }
+}

@@ -13,6 +13,9 @@ const ChipComponent = ({ label, variant }) => {
         border: `1px solid ${theme.palette.primary.main}`,
         color: "#000",
       }}
+      style={{
+        margin: "0px",
+      }}
     />
   );
 };
