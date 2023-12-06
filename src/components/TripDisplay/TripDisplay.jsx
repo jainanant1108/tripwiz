@@ -5,10 +5,15 @@ import {
   Button,
   Stack,
   Box,
+  Rating,
   useMediaQuery,
+  Tooltip,
+  styled,
 } from "@mui/material";
 import React from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import PersonIcon from "@mui/icons-material/Person";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import {
   AccordionIcon,
   SunIcon,
@@ -16,12 +21,32 @@ import {
 } from "../../utils/images";
 import ChipComponent from "../Chip/Chip";
 import { Accordion } from "..";
+import { toPascalCase } from "../../utils/pascalCase";
+import { Person } from "@mui/icons-material";
 
 const TripDisplay = ({ trip, handleSaveClick, isTripSaved, getPlaceImage }) => {
   const theme = useTheme();
   const mobileDevice = useMediaQuery((theme) =>
     theme.breakpoints.between("sm", "md")
   );
+  const getCrowd = (crowdLevel) => {
+    console.log(crowdLevel);
+    if (crowdLevel === "Not") {
+      return 1;
+    }
+    if (crowdLevel === "highly crowded") {
+      return 3;
+    }
+    if (crowdLevel === "moderately crowded") {
+      return 2;
+    }
+    return 1;
+  };
+  const StyledRating = styled(Rating)({
+    "& .MuiRating-iconFilled": {
+      color: theme.palette.error.main,
+    },
+  });
 
   return (
     <>
@@ -66,7 +91,7 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved, getPlaceImage }) => {
           </Button>
         </Grid>
       </Grid>
-      <Grid container>
+      <Grid container spacing={{ sm: "20px", md: "40px" }}>
         <Grid container item sm={12} md={7} gap={"48px"}>
           <Grid item>
             <Typography
@@ -96,7 +121,7 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved, getPlaceImage }) => {
               gap={"10px"}
             >
               {trip.includings.map((including) => (
-                <ChipComponent label={including} />
+                <ChipComponent label={toPascalCase(including)} />
               ))}
             </Stack>
           </Grid>
@@ -167,13 +192,46 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved, getPlaceImage }) => {
                               </Typography>
                             }
                           >
-                            <img
-                              loading="lazy"
-                              src={getPlaceImage(place.name)}
-                            />
-                            <Typography fontSize={"18px"} color={"#000"}>
-                              {place?.description}
-                            </Typography>
+                            <Grid
+                              container
+                              justifyContent={"center"}
+                              gap={"10px"}
+                              flexDirection={"column"}
+                            >
+                              <img
+                                loading="lazy"
+                                src={place.photoUrl}
+                                style={{ borderRadius: "20px" }}
+                                alt={`Photo of ${place.name}`}
+                              />
+                              <Typography fontSize={"18px"} color={"#000"}>
+                                {place?.description}
+                              </Typography>
+                              <Grid
+                                container
+                                justifyContent={"flex-end"}
+                                width={"100%"}
+                              >
+                                <Tooltip
+                                  title={
+                                    place?.crowded === "variable"
+                                      ? `This place is ${place?.crowded} crowded`
+                                      : `This place is ${place?.crowded}`
+                                  }
+                                >
+                                  <StyledRating
+                                    name="customized-10"
+                                    defaultValue={getCrowd(place?.crowded)}
+                                    max={3}
+                                    readOnly
+                                    icon={<PersonIcon fontSize="inherit" />}
+                                    emptyIcon={
+                                      <PersonOutlineIcon fontSize="inherit" />
+                                    }
+                                  />
+                                </Tooltip>
+                              </Grid>
+                            </Grid>
                           </Accordion>
                         </Grid>
                       ))}

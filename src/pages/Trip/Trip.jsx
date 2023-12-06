@@ -94,7 +94,7 @@ const Trip = () => {
           numberOfDays,
           placesToVisit,
         });
-
+        console.log(response.itinerary);
         dispatch(setItinerary(JSON.parse(response.itinerary)));
         setIsSubmitting(false);
         navigate("/itinerary");

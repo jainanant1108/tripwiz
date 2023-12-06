@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { Backdrop, useTheme } from "@mui/material";
+import React, { useState } from "react";
+import { InfinitySpin } from "react-loader-spinner";
 import { useSelector } from "react-redux";
 import { Header, Snackbar, TripDisplay } from "../../components";
-import TripImage from "../../utils/images/TripImage.png";
 import { saveTrip } from "../../services";
-import { Backdrop, useTheme } from "@mui/material";
-import { InfinitySpin } from "react-loader-spinner";
+import TripImage from "../../utils/images/TripImage.png";
 
 const Itinerary = () => {
-  const [placeImage, setPlaceImage] = useState(null);
   const [open, setOpen] = useState(false);
   const { trip_details } = useSelector((state) => state.itinerary.itinerary);
   const [tripSavedButton, setTripSavedButton] = useState(false);
@@ -24,7 +23,7 @@ const Itinerary = () => {
   const handleSaveClick = async () => {
     try {
       setIsTripSaved(true);
-      const response = await saveTrip({
+      await saveTrip({
         uid,
       });
       setIsTripSaved(false);
@@ -42,47 +41,6 @@ const Itinerary = () => {
       );
     }
   };
-  const getPlaceImage = async (place) => {
-    const apiKey = "AIzaSyCf3nqGvk1Kikwyj7O88LV8tYtzCDz7Q4E"; // Replace with your API key
-    const maxWidth = 400; // Set the maximum width of the image
-
-    try {
-      const placePredectionResponse = await fetch(
-        `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${place}&fields=photos&key=${apiKey}`
-      );
-      console.log(placePredectionResponse);
-      const placeid = placePredectionResponse?.predictions[0]?.place_id;
-      // Fetch place details including photo reference
-      const placeDetailsResponse = await fetch(
-        `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&fields=photos&key=${apiKey}`,
-        { mode: "no-cors" }
-      );
-
-      const placeDetailsData = await placeDetailsResponse.json();
-
-      if (
-        placeDetailsData.status === "OK" &&
-        placeDetailsData.result.photos &&
-        placeDetailsData.result.photos.length > 0
-      ) {
-        const photoReference =
-          placeDetailsData.result.photos[0].photo_reference;
-
-        // Fetch the actual image using the photo reference
-        const imageUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${maxWidth}&photoreference=${photoReference}&key=${apiKey}`;
-
-        // Set the image URL to the state
-        setPlaceImage(imageUrl);
-      } else {
-        // Handle the case when no photos are available
-        console.log("No photos available for this place");
-      }
-    } catch (error) {
-      // Handle any errors that occurred during the fetch
-      console.error("Error fetching place details:", error);
-    }
-  };
-  useEffect(() => {}, []);
 
   return (
     <>
@@ -95,7 +53,6 @@ const Itinerary = () => {
           trip={trip_details}
           handleSaveClick={handleSaveClick}
           isTripSaved={tripSavedButton}
-          getPlaceImage={getPlaceImage}
         />
       </div>
       <Backdrop open={isTripSaved}>
