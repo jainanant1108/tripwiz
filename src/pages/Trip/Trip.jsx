@@ -8,7 +8,7 @@ import {
   Snackbar,
   IconButton,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { geocodeByPlaceId } from "react-places-autocomplete";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -125,6 +125,11 @@ const Trip = () => {
 
     setOpen(false);
   };
+  useEffect(() => {
+    if (!uid) {
+      navigate("/login");
+    }
+  }, [uid]);
 
   return (
     <>

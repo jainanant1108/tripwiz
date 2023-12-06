@@ -51,7 +51,9 @@ const Header = () => {
   return (
     <Grid container flexWrap={"nowrap"}>
       <Grid container lg={4} gap={theme.spacing(5)} alignItems={"center"}>
-        <Logo />
+        <a href="/">
+          <Logo />
+        </a>
         {!mobileDevice && (
           <Typography
             fontWeight={600}
