@@ -246,33 +246,6 @@ const Login = () => {
                     </Typography>
                   </Button>
                 </Grid>
-                <Grid container item justifyContent={"center"}>
-                  <Button
-                    id="facebookSigning"
-                    sx={{
-                      width: "90%",
-                      background: theme.palette.primary.main,
-                      borderRadius: "15px",
-                      boxShadow: "4px 4px 10px 5px rgba(0, 0, 0, 0.07)",
-                      "&:hover": {
-                        background: theme.palette.primary.main,
-                      },
-                      p: `${theme.spacing(3)} 0px`,
-                    }}
-                    onClick={handleSignInWithFacebook}
-                  >
-                    <FacebookIcon />
-                    <Typography
-                      fontFamily={"Poppins"}
-                      fontSize={theme.spacing(4)}
-                      fontWeight={600}
-                      marginLeft={theme.spacing(10)}
-                      color={theme.palette.secondary.main}
-                    >
-                      {"Continue with Facebook"}
-                    </Typography>
-                  </Button>
-                </Grid>
               </Grid>
               <Grid container gap={theme.spacing(2)} flexDirection={"column"}>
                 <Grid
