@@ -1,27 +1,35 @@
-import { Button, Grid, TextField, Typography, useTheme } from "@mui/material";
-import React, { useState } from "react";
-import { FacebookIcon, GoogleIcon, Logo } from "../../utils/images";
+import {
+  Backdrop,
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { GoogleIcon, Logo } from "../../utils/images";
 import SignUpImage from "../../utils/images/SignupImage.png";
 // import { Button } from "../../components";
 import {
-  FacebookAuthProvider,
   GoogleAuthProvider,
   getAuth,
-  signInWithPopup,
+  getRedirectResult,
+  signInWithRedirect,
 } from "firebase/auth";
 import { Controller, FormProvider, useForm } from "react-hook-form";
+import { InfinitySpin } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
-import ButtonComponent from "../../components/Button/Button";
 import { Snackbar } from "../../components";
-import { signupUser } from "../../services";
+import ButtonComponent from "../../components/Button/Button";
+import { signupUser, googleLogin } from "../../services";
 import { useDispatch } from "react-redux";
-import { setUID } from "../../store/slices";
+import { setUID, setUser } from "../../store/slices";
 
 const Signup = () => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const methods = useForm({
     mode: "onBlur",
   });
@@ -30,38 +38,72 @@ const Signup = () => {
     formState: { errors },
   } = methods;
   const theme = useTheme();
+  const dispatch = useDispatch();
   const handleSignInWithGoogle = () => {
     const auth = getAuth(); // Get the Firebase Auth instance
-    console.log(auth);
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // User is signed in with Google.
-        const user = result.user;
-        console.log("User logged in:", user);
-        navigate("/login", { replace: true });
-        // You can now redirect the user or perform further actions.
-      })
-      .catch((error) => {
-        // Handle errors here.
-        setMessage("Error while signing up with google");
-        setOpen(true);
-        console.error(error);
-      });
+    signInWithRedirect(auth, provider);
   };
+
+  const handleRedirectCallback = async () => {
+    const auth = getAuth();
+
+    try {
+      setIsSubmitting(true);
+      const result = await getRedirectResult(auth);
+      if (!result) {
+        setIsSubmitting(false);
+      }
+      const user = result?.user;
+
+      // Check if the user is signed in
+      if (user) {
+        // Store the UID in Firestore Realtime Database
+        setIsSubmitting(true);
+        // Dispatch actions to update Redux store or perform other actions
+        dispatch(setUID(user.uid));
+        dispatch(
+          setUser({
+            displayName: user.displayName,
+            username: user.email,
+            uid: user.uid,
+          })
+        );
+        await googleLogin({
+          displayName: user.displayName,
+          username: user.email,
+          uid: user.uid,
+        });
+        console.log("User logged in:", user);
+        setIsSubmitting(false);
+        navigate("/", { replace: true });
+      }
+    } catch (error) {
+      setIsSubmitting(false);
+      // Handle errors here.
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    handleRedirectCallback();
+  }, []);
 
   const onSubmit = async (formData) => {
     try {
+      setIsSubmitting(true);
       const user = await signupUser({
         username: formData?.email,
         password: formData?.password,
         displayName: formData?.firstName.concat(" ", formData?.lastName),
       });
       console.log(user);
+      setIsSubmitting(false);
       navigate("/login", { replace: true });
 
       // The user is signed up.
     } catch (error) {
+      setIsSubmitting(false);
       setMessage("Error while signing up. Please try again later.");
       setOpen(true);
     }
@@ -79,7 +121,12 @@ const Signup = () => {
     <FormProvider {...methods}>
       <form noValidate onSubmit={methods.handleSubmit(onSubmit)}>
         <div className="container">
-          <Grid container justifyContent={"space-between"}>
+          <Grid
+            container
+            justifyContent={"space-between"}
+            flexDirection={{ sm: "column-reverse", md: "row" }}
+            gap={{ sm: "20px", md: "0px" }}
+          >
             <Grid container lg={5.5}>
               <img src={SignUpImage} alt="" srcset="" width={"100%"} />
             </Grid>
@@ -118,7 +165,11 @@ const Signup = () => {
                 </Typography>
               </Grid>
               <Grid container gap={theme.spacing(6)}>
-                <Grid container columnSpacing={theme.spacing(5)}>
+                <Grid
+                  container
+                  columnSpacing={theme.spacing(5)}
+                  rowSpacing={{ sm: theme.spacing(6), md: "0px" }}
+                >
                   <Grid item sm={12} md={6}>
                     <Controller
                       name="firstName"
@@ -323,6 +374,9 @@ const Signup = () => {
             </Grid>
           </Grid>
           <Snackbar open={open} handleClose={handleClose} message={message} />
+          <Backdrop open={isSubmitting}>
+            <InfinitySpin width="200" color={theme.palette.secondary.main} />
+          </Backdrop>
         </div>
       </form>
     </FormProvider>

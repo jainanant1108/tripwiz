@@ -1,16 +1,25 @@
-import { Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { useState } from "react";
+import {
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+  Backdrop,
+} from "@mui/material";
+import { useState, useEffect } from "react";
 import { Button, Snackbar } from "../../components";
 import { Logo } from "../../utils/images";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../../services";
+import { isUserLoggedIn, logoutUser } from "../../services";
 import { resetItinerary, resetTrip, resetUser } from "../../store/slices";
 import { useNavigate } from "react-router-dom";
+import { InfinitySpin } from "react-loader-spinner";
 
 const Header = () => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const uid = useSelector((state) => state.user.uid);
   const userDetails = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -30,12 +39,15 @@ const Header = () => {
 
   const handleSignoutClick = async () => {
     try {
+      setIsSubmitting(true);
       await logoutUser({ uid });
       dispatch(resetUser());
       dispatch(resetItinerary());
       dispatch(resetTrip());
+      setIsSubmitting(false);
       navigate("/", { replace: true });
     } catch (error) {
+      setIsSubmitting(false);
       setMessage("Error while signing out. Please try again later");
       setOpen(true);
     }
@@ -47,6 +59,15 @@ const Header = () => {
 
     setOpen(false);
   };
+  useEffect(() => {
+    if (uid) {
+      async function getLoggedInStatus() {
+        const isUserLogIn = await isUserLoggedIn(uid);
+        setIsLoggedIn(isUserLogIn?.isLoggedin);
+      }
+      getLoggedInStatus();
+    }
+  }, []);
 
   return (
     <Grid container flexWrap={"nowrap"}>
@@ -72,7 +93,7 @@ const Header = () => {
         justifyContent={"center"}
         alignItems={"center"}
       >
-        {uid ? (
+        {uid && isLoggedIn ? (
           <Grid item>
             <Button
               id="savedTrips"
@@ -116,7 +137,7 @@ const Header = () => {
             </Grid>
           </>
         )}
-        {uid && (
+        {uid && isLoggedIn && (
           <>
             {!mobileDevice && (
               <Grid item>
@@ -142,6 +163,9 @@ const Header = () => {
         )}
       </Grid>
       <Snackbar open={open} handleClose={handleClose} message={message} />
+      <Backdrop open={isSubmitting}>
+        <InfinitySpin width="200" color={theme.palette.secondary.main} />
+      </Backdrop>
     </Grid>
   );
 };

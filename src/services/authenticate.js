@@ -20,3 +20,17 @@ export const logoutUser = async (user) => {
 
   return response?.data;
 };
+
+export const isUserLoggedIn = async (userId) => {
+  const tripUrl = `authenticate`;
+  const response = await tripApi.post(`${tripUrl}`, { uid: userId });
+
+  return response?.data;
+};
+
+export const googleLogin = async (user) => {
+  const tripUrl = `authenticate/google`;
+  const response = await tripApi.post(`${tripUrl}`, user);
+
+  return response?.data;
+};

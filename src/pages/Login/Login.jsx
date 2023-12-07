@@ -1,28 +1,36 @@
-import { Button, Grid, TextField, Typography, useTheme } from "@mui/material";
-import React, { useState } from "react";
-import { FacebookIcon, GoogleIcon, Logo } from "../../utils/images";
+import {
+  Backdrop,
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { GoogleIcon, Logo } from "../../utils/images";
 import LoginImage from "../../utils/images/LoginImage.png";
 // import { Button } from "../../components";
 import {
-  FacebookAuthProvider,
   GoogleAuthProvider,
-  signInWithEmailAndPassword,
   getAuth,
-  signInWithPopup,
+  getRedirectResult,
+  signInWithRedirect,
 } from "firebase/auth";
 import { Controller, FormProvider, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import ButtonComponent from "../../components/Button/Button";
-import { getUserDetails, loginUser } from "../../services";
+import { InfinitySpin } from "react-loader-spinner";
 import { useDispatch } from "react-redux";
-import { setUID, setUser } from "../../store/slices";
+import { useNavigate } from "react-router-dom";
 import { Snackbar } from "../../components";
+import ButtonComponent from "../../components/Button/Button";
+import { getUserDetails, googleLogin, loginUser } from "../../services";
+import { setUID, setUser } from "../../store/slices";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const methods = useForm({
     mode: "onBlur",
   });
@@ -33,47 +41,60 @@ const Login = () => {
   const theme = useTheme();
   const handleSignInWithGoogle = () => {
     const auth = getAuth(); // Get the Firebase Auth instance
-
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // User is signed in with Google.
-        const user = result.user;
-        console.log("User logged in:", user);
-        navigate("/", { replace: true });
-
-        // You can now redirect the user or perform further actions.
-      })
-      .catch((error) => {
-        // Handle errors here.
-        console.error(error);
-      });
+    signInWithRedirect(auth, provider);
   };
 
-  const handleSignInWithFacebook = async () => {
+  const handleRedirectCallback = async () => {
     const auth = getAuth();
 
-    const provider = new FacebookAuthProvider();
     try {
-      const result = await signInWithPopup(auth, provider);
+      setIsSubmitting(true);
+      const result = await getRedirectResult(auth);
       const user = result.user;
-      console.log("User logged in with Facebook:", user);
-      navigate("/", { replace: true });
 
-      // You can redirect or perform further actions with the user.
+      // Check if the user is signed in
+      if (user) {
+        // Store the UID in Firestore Realtime Database
+
+        // Dispatch actions to update Redux store or perform other actions
+        dispatch(setUID(user.uid));
+        dispatch(
+          setUser({
+            displayName: user.displayName,
+            username: user.email,
+            uid: user.uid,
+          })
+        );
+        await googleLogin({
+          displayName: user.displayName,
+          username: user.email,
+          uid: user.uid,
+        });
+        console.log("User logged in:", user);
+        setIsSubmitting(false);
+        navigate("/", { replace: true });
+      }
     } catch (error) {
-      console.error("Error signing in with Facebook:", error);
+      setIsSubmitting(false);
+      // Handle errors here.
+      console.error(error);
     }
   };
 
+  useEffect(() => {
+    handleRedirectCallback();
+  }, []);
+
   const onSubmit = async (formData) => {
     try {
+      setIsSubmitting(true);
       const user = await loginUser({
         username: formData?.email,
         password: formData?.password,
       });
       console.log("user", user);
-      navigate("/", { replace: true });
+
       dispatch(setUID(user?.uid));
       const userDetails = await getUserDetails({
         uid: user?.uid,
@@ -86,9 +107,12 @@ const Login = () => {
           uid: user.uid,
         })
       );
+      setIsSubmitting(false);
+      navigate("/", { replace: true });
       // The user is signed up.
     } catch (error) {
       console.log(error);
+      setIsSubmitting(false);
       setMessage(error.response.data.message);
       setOpen(true);
     }
@@ -275,6 +299,9 @@ const Login = () => {
           <Snackbar open={open} handleClose={handleClose} message={message} />
         </div>
       </form>
+      <Backdrop open={isSubmitting}>
+        <InfinitySpin width="200" color={theme.palette.secondary.main} />
+      </Backdrop>
     </FormProvider>
   );
 };
