@@ -83,7 +83,7 @@ const Trip = () => {
     if (tripType !== "") {
       try {
         setIsSubmitting(true);
-        const numberOfDays = dayjs(trip.endDate).diff(trip.startDate, "day");
+        const numberOfDays = dayjs(trip.endDate).add(1,"day").diff(trip.startDate, "day");
         const placesToVisit = numberOfDays * 3;
         const response = await generateTrip({
           uid: uid,

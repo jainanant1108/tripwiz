@@ -38,7 +38,7 @@ const Calendar = ({
       onChange={onChange}
       disabledAfterDate={
         initialRangeValuesProps?.from &&
-        dayjs(initialRangeValuesProps?.from).add(5, "days")
+        dayjs(initialRangeValuesProps?.from).add(4, "days")
       }
       autoResponsive={true}
     />

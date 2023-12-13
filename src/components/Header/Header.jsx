@@ -73,18 +73,21 @@ const Header = () => {
   return (
     <Grid container flexWrap={"nowrap"}>
       <Grid container lg={4} gap={theme.spacing(5)} alignItems={"center"}>
-        <a href="/">
+        <a href="/" style={{textDecoration:"none",color:`${theme.palette.primary.main}`}}>
+          <Grid container gap={"10px"}>
           <Logo />
-        </a>
-        {!mobileDevice && (
+          {!mobileDevice && (
           <Typography
             fontWeight={600}
             fontFamily={"Poppins"}
             fontSize={theme.spacing(9)}
+            sx={{textDecoration:"none"}}
           >
             TripWiz
           </Typography>
         )}
+          </Grid>
+        </a>
       </Grid>
       <Grid
         container
