@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const tripApi = axios.create({
-  baseURL: "https://trip-wiz-service.onrender.",
+  baseURL: "https://trip-wiz-service.onrender.com",
 });
 
 tripApi.interceptors.response.use(
