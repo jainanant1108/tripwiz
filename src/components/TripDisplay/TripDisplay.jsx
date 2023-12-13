@@ -201,7 +201,7 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved, getPlaceImage }) => {
                               <img
                                 loading="lazy"
                                 src={place.photoUrl}
-                                style={{ borderRadius: "20px" }}
+                                style={{ borderRadius: "20px", width: "100%" }}
                                 alt={`Photo of ${place.name}`}
                               />
                               <Typography fontSize={"18px"} color={"#000"}>

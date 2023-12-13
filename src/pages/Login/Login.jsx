@@ -22,7 +22,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Snackbar } from "../../components";
 import ButtonComponent from "../../components/Button/Button";
-import { getUserDetails, googleLogin, loginUser } from "../../services";
+import { getUserDetails, googleLogin, loginUser, ping } from "../../services";
 import { setUID, setUser } from "../../store/slices";
 
 const Login = () => {
@@ -84,6 +84,7 @@ const Login = () => {
 
   useEffect(() => {
     handleRedirectCallback();
+    ping();
   }, []);
 
   const onSubmit = async (formData) => {

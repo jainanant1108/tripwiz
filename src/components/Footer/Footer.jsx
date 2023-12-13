@@ -15,128 +15,81 @@ const Footer = () => {
       <div id="footerMainWrapper" className="container">
         <Grid
           container
-          md={12}
-          lg={12}
-          id="gridMainWrapper"
-          sx={{
-            height: "fit-content",
-            padding: theme.spacing(2),
-          }}
+          color={theme.palette.secondary.main}
+          gap={{ sm: "20px", md: "0px" }}
         >
+          <Grid container item sm={12} md={6} flexDirection={"column"}>
+            <Grid item container gap={"10px"} alignItems={"center"}>
+              <Logo fill={theme.palette.secondary.main} />
+              <Typography fontSize={"16px"}>{"TripWiz"}</Typography>
+            </Grid>
+            <Grid item>
+              <Typography
+                fontWeight={400}
+                fontFamily={"Recursive"}
+                fontSize={theme.spacing(3)}
+                sx={{ marginTop: "20px" }}
+              >
+                @2023 Trip Wiz All Rights Reserved
+              </Typography>
+            </Grid>
+          </Grid>
           <Grid
-            sm={6}
+            container
             item
-            id="gridColumn1"
-            sx={{
-              paddingTop: theme.spacing(1),
-              paddingLeft: theme.spacing(5),
-            }}
+            sm={12}
+            md={6}
+            justifyContent={{ sm: "flex-start", md: "flex-end" }}
+            flexDirection={{ sm: "row", md: "column" }}
           >
-            <div id="column1OuterWrapper">
-              <div id="column1Row1Wrapper">
-                <div id="column1LogoWrapper">
-                  <img src={Logo} style={{ display: "block" }} />
+            <Grid
+              item
+              container
+              justifyContent={{ sm: "flex-start", md: "flex-end" }}
+            >
+              <Typography
+                fontWeight={600}
+                fontFamily={"Recursive"}
+                fontSize={theme.spacing(4)}
+                color={theme.palette.secondary.main}
+              >
+                About Trip Wiz
+              </Typography>
+            </Grid>
+            <Grid item>
+              <ul class="linksList">
+                <li>
                   <Typography
                     fontWeight={400}
                     fontFamily={"Recursive"}
                     fontSize={theme.spacing(3)}
-                    sx={{ marginTop: "20px" }}
+                    textAlign={{ sm: "left", md: "right" }}
                   >
-                    @2023 Trip Wiz All Rights Reserved
+                    About Us
                   </Typography>
-                </div>
-                <div id="column1LinksWrapper">
-                  <ul class="linksList">
-                    <li>
-                      <Typography
-                        fontWeight={400}
-                        fontFamily={"Recursive"}
-                        fontSize={theme.spacing(3)}
-                      >
-                        Terms Of use
-                      </Typography>
-                    </li>
-                    <li>
-                      <Typography
-                        fontWeight={400}
-                        fontFamily={"Recursive"}
-                        fontSize={theme.spacing(3)}
-                      >
-                        Privacy and cookies
-                      </Typography>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div id="column1Row2Wrapper">
-                <Typography
-                  fontWeight={400}
-                  fontFamily={"Recursive"}
-                  fontSize={theme.spacing(2)}
-                  marginTop={5}
-                >
-                  This is the version of our website addressed to speakers of
-                  English in Canada. The application follows the English-US
-                  standards.
-                </Typography>
-              </div>
-            </div>
-          </Grid>
-          <Grid
-            md={6}
-            item
-            id="gridColumn1"
-            sx={{
-              paddingTop: theme.spacing(1),
-              paddingRight: theme.spacing(4),
-            }}
-          >
-            <div id="column2OuterWrapper">
-              <div id="column2InnerWrapper">
-                <Typography
-                  fontWeight={600}
-                  fontFamily={"Recursive"}
-                  fontSize={theme.spacing(4)}
-                  color={theme.palette.secondary.main}
-                  marginLeft={3}
-                  align="right"
-                >
-                  About Trip Wiz
-                </Typography>
-                <ul class="linksList">
-                  <li>
-                    <Typography
-                      fontWeight={400}
-                      fontFamily={"Recursive"}
-                      fontSize={theme.spacing(3)}
-                      align="right"
-                    >
-                      About Us
-                    </Typography>
-                  </li>
-                  <li>
-                    <Typography
-                      fontWeight={400}
-                      fontFamily={"Recursive"}
-                      fontSize={theme.spacing(3)}
-                      align="right"
-                    >
-                      Contact Us
-                    </Typography>
-                  </li>
-                  <li>
-                    <Typography
-                      fontWeight={400}
-                      fontFamily={"Recursive"}
-                      fontSize={theme.spacing(3)}
-                      align="right"
-                    >
-                      Help Center
-                    </Typography>
-                  </li>
-                </ul>
-              </div>
-            </div>
+                </li>
+                <li>
+                  <Typography
+                    fontWeight={400}
+                    fontFamily={"Recursive"}
+                    fontSize={theme.spacing(3)}
+                    textAlign={{ sm: "left", md: "right" }}
+                  >
+                    Contact Us
+                  </Typography>
+                </li>
+                <li>
+                  <Typography
+                    fontWeight={400}
+                    fontFamily={"Recursive"}
+                    fontSize={theme.spacing(3)}
+                    textAlign={{ sm: "left", md: "right" }}
+                  >
+                    Help Center
+                  </Typography>
+                </li>
+              </ul>
+            </Grid>
           </Grid>
         </Grid>
       </div>

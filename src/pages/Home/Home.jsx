@@ -1,6 +1,6 @@
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { Button, Grid, Typography, useTheme } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { geocodeByPlaceId } from "react-places-autocomplete";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import HomePageImage from "../../utils/images/HomePage.png";
 import HomePageSection1 from "../../utils/images/HomePageSection1.png";
 import HomePageSection2 from "../../utils/images/HomePageSection2.png";
 import "./Home.css";
+import { ping } from "../../services";
 
 function Home() {
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -33,6 +34,9 @@ function Home() {
       navigate(`/${selectedLocation.name}`);
     }
   };
+  useEffect(() => {
+    ping();
+  }, []);
 
   const theme = useTheme();
   return (

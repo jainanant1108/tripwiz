@@ -9,7 +9,6 @@ import {
 import React, { useState, useEffect } from "react";
 import { GoogleIcon, Logo } from "../../utils/images";
 import SignUpImage from "../../utils/images/SignupImage.png";
-// import { Button } from "../../components";
 import {
   GoogleAuthProvider,
   getAuth,
@@ -21,7 +20,7 @@ import { InfinitySpin } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import { Snackbar } from "../../components";
 import ButtonComponent from "../../components/Button/Button";
-import { signupUser, googleLogin } from "../../services";
+import { signupUser, googleLogin, ping } from "../../services";
 import { useDispatch } from "react-redux";
 import { setUID, setUser } from "../../store/slices";
 
@@ -87,6 +86,7 @@ const Signup = () => {
 
   useEffect(() => {
     handleRedirectCallback();
+    ping();
   }, []);
 
   const onSubmit = async (formData) => {

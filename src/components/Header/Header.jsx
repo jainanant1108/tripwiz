@@ -4,6 +4,7 @@ import {
   useMediaQuery,
   useTheme,
   Backdrop,
+  capitalize,
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Button, Snackbar } from "../../components";
@@ -146,7 +147,7 @@ const Header = () => {
                   color={theme.palette.error.main}
                   fontFamily={"Recursive"}
                 >
-                  {"Hello, " + userDetails?.displayName}
+                  {"Hello, " + capitalize(userDetails?.displayName)}
                 </Typography>
               </Grid>
             )}
