@@ -1,13 +1,27 @@
 import Approuter from "./Approuter";
 import "./App.css";
-import { Header, Footer } from "./components";
+import { Header, Footer, Popup } from "./components";
 import { useTheme } from "@mui/material";
 import { Provider } from "react-redux";
 import { persistor, store } from "./store/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { ping } from "./services";
+import { useEffect, useState } from "react";
 
 function App() {
   const theme = useTheme();
+  const [isServerOnline, setIsServerOnline] = useState(true);
+  const checkServerStatus = async () => {
+    try {
+      await ping();
+      setIsServerOnline(true);
+    } catch (error) {
+      setIsServerOnline(false);
+    }
+  };
+  useEffect(() => {
+    checkServerStatus();
+  }, [5000]);
   return (
     <>
       <div
@@ -24,6 +38,7 @@ function App() {
         </Provider>
       </div>
       <Footer id="footer" />
+      <Popup isPopupVisible={!isServerOnline} />
     </>
   );
 }

@@ -1,0 +1,65 @@
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  max-width: 50vw;
+  max-height: 80vh;
+  transform: translate(-50%, -50%);
+  background-color: #f6f6f6;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+  border-radius: 10px;
+  background-blend-mode: multiply;
+  padding-top: 5%;
+  padding-bottom: 18%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.popup-content {
+  /* Rounded border */
+  text-align: justify;
+  transition: all 0.3s ease-in-out;
+  background-blend-mode: multiply;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: all 0.3s ease-in-out;
+  background-blend-mode: multiply;
+}
+
+.popup img {
+  mix-blend-mode: multiply;
+  background-blend-mode: multiply;
+  max-width: 50%;
+  height: auto;
+  bottom: 5%;
+  right: 10%;
+  position: absolute;
+  mix-blend-mode: multiply;
+}
+
+/* media query for screen smaller than 768px */
+
+@media screen and (max-width: 768px) {
+  .popup {
+    max-width: 80%;
+    max-height: 60%;
+    height: 100vh;
+    width: 100vw;
+    padding-top: 15%;
+    padding-bottom: 0%;
+  }
+  .popup img {
+    max-width: 90%;
+    right: auto;
+    left: auto;
+    bottom: 0%;
+  }
+}

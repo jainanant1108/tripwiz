@@ -8,3 +8,4 @@ export { default as ToggleGroup } from "./ToggleGroup/ToggleGroup";
 export { default as TripDisplay } from "./TripDisplay/TripDisplay";
 export { default as Chip } from "./Chip/Chip";
 export { default as Accordion } from "./Accordion/Accordion";
+export { default as Popup } from "./Popup/Popup";
