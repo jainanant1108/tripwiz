@@ -54,7 +54,7 @@ function App() {
         </Provider>
       </div>
       <Footer id="footer" />
-      <Popup isPopupVisible={!isServerOnline} />
+      {/*<Popup isPopupVisible={!isServerOnline} />*/}
     </>
   );
 }

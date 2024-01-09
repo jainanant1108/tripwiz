@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Popup.css";
-import AiImage from "../../utils/images/LoginImage.png";
+import AiImage from "../../utils/images/ai_image.png";
 import { Button, useTheme } from "@mui/material";
 
 const PopUp = ({ togglePopup, isPopupVisible }) => {

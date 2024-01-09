@@ -78,7 +78,11 @@ const Header = () => {
   }, []);
 
   return (
-    <Grid container flexWrap={"nowrap"}>
+    <Grid container flexWrap={"nowrap"} style={{
+      padding: `${theme.spacing(10)}`,
+
+      
+    }}>
       <Grid container lg={4} gap={theme.spacing(5)} alignItems={"center"}>
         <a href="/" style={{ textDecoration: "none", color: `${theme.palette.primary.main}` }}>
           <Grid container gap={"10px"}>
