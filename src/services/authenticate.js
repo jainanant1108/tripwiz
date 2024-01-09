@@ -24,7 +24,9 @@ export const logoutUser = async (user) => {
 export const isUserLoggedIn = async (userId) => {
   const tripUrl = `authenticate`;
   const response = await tripApi.post(`${tripUrl}`, { uid: userId });
-
+  if (response?.data?.error) {
+    return false;
+  }
   return response?.data;
 };
 

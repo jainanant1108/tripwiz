@@ -1,8 +1,14 @@
 .container {
   overflow: hidden;
-  max-width: 1366px;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  max-width: 1920px;
   margin: 0 auto;
-  padding: 40px;
+
+}
+
+.container::-webkit-scrollbar {
+  display: none;
 }
 
 @media only screen and (max-width: 768px) {

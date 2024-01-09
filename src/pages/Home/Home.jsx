@@ -34,9 +34,9 @@ function Home() {
       navigate(`/${selectedLocation.name}`);
     }
   };
-  useEffect(() => {
-    ping();
-  }, []);
+  // useEffect(() => {
+  //   ping();
+  // }, []);
 
   const theme = useTheme();
   return (

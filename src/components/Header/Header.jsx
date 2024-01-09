@@ -63,29 +63,40 @@ const Header = () => {
   useEffect(() => {
     if (uid) {
       async function getLoggedInStatus() {
-        const isUserLogIn = await isUserLoggedIn(uid);
+        const isUserLogIn = await isUserLoggedIn(uid).catch((error) => {
+          setMessage("Error while checking user login status");
+          dispatch(resetUser());
+          dispatch(resetItinerary());
+          dispatch(resetTrip());
+          //setOpen(true);
+        });
         setIsLoggedIn(isUserLogIn?.isLoggedin);
       }
       getLoggedInStatus();
     }
+
   }, []);
 
   return (
-    <Grid container flexWrap={"nowrap"}>
+    <Grid container flexWrap={"nowrap"} style={{
+      padding: `${theme.spacing(10)}`,
+
+      
+    }}>
       <Grid container lg={4} gap={theme.spacing(5)} alignItems={"center"}>
-        <a href="/" style={{textDecoration:"none",color:`${theme.palette.primary.main}`}}>
+        <a href="/" style={{ textDecoration: "none", color: `${theme.palette.primary.main}` }}>
           <Grid container gap={"10px"}>
-          <Logo />
-          {!mobileDevice && (
-          <Typography
-            fontWeight={600}
-            fontFamily={"Poppins"}
-            fontSize={theme.spacing(9)}
-            sx={{textDecoration:"none"}}
-          >
-            TripWiz
-          </Typography>
-        )}
+            <Logo />
+            {!mobileDevice && (
+              <Typography
+                fontWeight={600}
+                fontFamily={"Poppins"}
+                fontSize={theme.spacing(9)}
+                sx={{ textDecoration: "none" }}
+              >
+                TripWiz
+              </Typography>
+            )}
           </Grid>
         </a>
       </Grid>
@@ -118,7 +129,7 @@ const Header = () => {
         alignItems={"center"}
         flexWrap={"nowrap"}
       >
-        {!uid && (
+        {!uid  && (
           <>
             <Grid item>
               <Button
