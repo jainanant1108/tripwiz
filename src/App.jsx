@@ -13,15 +13,31 @@ function App() {
   const [isServerOnline, setIsServerOnline] = useState(true);
   const checkServerStatus = async () => {
     try {
-      await ping();
+      await Promise.race([ping(), new Promise((_, reject) => setTimeout(() => reject('Timeout'), 3000))]);
       setIsServerOnline(true);
+      console.log("server is online");
     } catch (error) {
+      console.log("server is offline");
       setIsServerOnline(false);
     }
   };
+
   useEffect(() => {
     checkServerStatus();
-  }, [5000]);
+      console.log("checking server status for the first time");
+      console.log(isServerOnline);
+      const intervalId = setInterval(() => {
+        console.log("checking server status");
+        if (!isServerOnline) {
+        checkServerStatus();
+        }
+      }, 5000);
+        // Cleanup function to clear the interval when the component is unmounted
+  
+    
+  
+    return () => clearInterval(intervalId);
+  }, [isServerOnline]);
   return (
     <>
       <div
