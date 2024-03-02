@@ -18,17 +18,17 @@ const LocationSearchBar = ({ handleSelect, defaultValue, handleGoClick }) => {
       width={"100%"}
       flexWrap={{ md: "nowrap" }}
       columnGap={{ sm: "0px", md: "40px" }}
-      p={{ sm: "10px", md: "25px 40px" }}
+      p={{ sm: "10px", md: "35px 50px" }}
       sx={{
-        boxShadow: "10px 20px 50px 20px rgba(0, 0, 0, 0.06)",
-        border: `1px solid ${theme.palette.primary.main}`,
+        boxShadow: "10px 20px 50px 20px rgba(0, 0, 0, 0.15)",
+        // border: `1px solid ${theme.palette.primary.main}`,
         background: theme.palette.secondary.main,
         borderRadius: "20px",
       }}
     >
       <Grid container item sm={10}>
         <AutoComplete
-          apiKey={"AIzaSyCf3nqGvk1Kikwyj7O88LV8tYtzCDz7Q4E"}
+          apiKey={"AIzaSyBPKBTlohuOXARS56ARA3xLSrJwbyfJUn0"}
           onPlaceSelected={handleSelect}
           defaultValue={defaultValue}
           style={{

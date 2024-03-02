@@ -25,6 +25,7 @@ import { toPascalCase } from "../../utils/pascalCase";
 import { Person } from "@mui/icons-material";
 
 const TripDisplay = ({ trip, handleSaveClick, isTripSaved, getPlaceImage }) => {
+  const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
   const theme = useTheme();
   const mobileDevice = useMediaQuery((theme) =>
     theme.breakpoints.between("sm", "md")
@@ -256,9 +257,10 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved, getPlaceImage }) => {
             loading="lazy"
             allowfullscreen
             referrerpolicy="no-referrer-when-downgrade"
-            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyCf3nqGvk1Kikwyj7O88LV8tYtzCDz7Q4E
-    &q=${trip.destination}`}
+            //src={`https://www.google.com/maps/embed/v1/place?key=${API_KEY}&q=${trip.destination}`}
           ></iframe>
+          {
+          console.log("Api Key : ", API_KEY)}
         </Grid>
       </Grid>
     </>
