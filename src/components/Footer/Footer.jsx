@@ -10,6 +10,7 @@ const Footer = () => {
       sx={{
         bgcolor: theme.palette.primary.main,
         color: theme.palette.grey[200],
+        paddingTop:'40px'
       }}
     >
       <div id="footerMainWrapper" className="container">
