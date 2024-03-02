@@ -136,9 +136,13 @@ const Trip = () => {
       <div className="container">
         <Header />
       </div>
-      <img src={TripImage} alt="" style={{ maxWidth: "100vw" }} />
+      <img
+        src={TripImage}
+        alt=""
+        style={{ width: "99vw", height: "20vh", objectFit: "cover" }}
+      />
       <div className="container">
-        <Grid container gap={theme.spacing(6)}>
+        <Grid container gap={theme.spacing(6)} mb={{ sm: "50px", md: "120px" }}>
           <Grid container justifyContent={"center"}>
             <LocationSearchBar
               handleSelect={handleSelect}
