@@ -4,7 +4,8 @@
   scrollbar-width: none;  /* Firefox */
   max-width: 1920px;
   margin: 0 auto;
-
+  padding-left: 5rem;
+  padding-right: 5rem;
 }
 
 .container::-webkit-scrollbar {
