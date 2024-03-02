@@ -10,6 +10,7 @@ import { resetTrip, setTrip } from "../../store/slices";
 import HomePageImage from "../../utils/images/HomePage.png";
 import HomePageSection1 from "../../utils/images/HomePageSection1.png";
 import HomePageSection2 from "../../utils/images/HomePageSection2.png";
+import Back from "../../utils/images/ai_background.svg";
 import "./Home.css";
 import { ping } from "../../services";
 
@@ -52,7 +53,6 @@ function Home() {
             container
             justifyContent={"space-between"}
             gap={{ sm: "20px", md: "0px" }}
-            mt={{ sm: "20px" }}
           >
             <Grid
               item
@@ -63,21 +63,30 @@ function Home() {
               alignItems={"center"}
             >
               <Typography
-                fontSize={{ sm: theme.spacing(6), md: theme.spacing(12) }}
+                fontSize={{ sm: theme.spacing(6), md: theme.spacing(16) }}
                 fontWeight={700}
+                sx={{
+                  marginRight: "-150px",
+                  zIndex: 1,
+                }}
               >
-                {"Fuel your imagined trip with "}
+                {"Fuel your imagined trip"}
+                <br/>{" with "}
                 <span style={{ color: theme.palette.error.main }}>{"AI"}</span>
               </Typography>
             </Grid>
-            <Grid item sm={12} md={7}>
-              <img src={HomePageImage} alt="" style={{ maxWidth: "100%" }} />
+            <Grid item sm={12} md={8}>
+              <img
+                src={Back}
+                alt=""
+                style={{ maxWidth: "100%" }}
+              />
             </Grid>
           </Grid>
           <Grid
             container
             justifyContent={"center"}
-            mt={{ sm: "36px", md: "60px" }}
+            mt={{ sm: "-36px", md: "-60px" }}
           >
             <LocationSearchBar
               address={address}
