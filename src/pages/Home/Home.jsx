@@ -58,29 +58,33 @@ function Home() {
               item
               container
               sm={12}
-              md={4}
+              md={6}
               justifyContent={"center"}
               alignItems={"center"}
             >
               <Typography
-                fontSize={{ sm: theme.spacing(6), md: theme.spacing(16) }}
+                fontSize={{ sm: theme.spacing(6), md: theme.spacing(12) }}
                 fontWeight={700}
                 sx={{
-                  marginRight: "-150px",
                   zIndex: 1,
                 }}
               >
                 {"Fuel your imagined trip"}
-                <br/>{" with "}
+                <br />
+                {" with "}
                 <span style={{ color: theme.palette.error.main }}>{"AI"}</span>
               </Typography>
             </Grid>
-            <Grid item sm={12} md={8}>
-              <img
-                src={Back}
-                alt=""
-                style={{ maxWidth: "100%" }}
-              />
+            <Grid
+              item
+              sm={12}
+              md={6}
+              sx={{
+                marginLeft: "auto",
+                marginRight: "0px",
+              }}
+            >
+              <img src={Back} alt="" style={{ maxWidth: "100%" }} />
             </Grid>
           </Grid>
           <Grid
@@ -102,7 +106,7 @@ function Home() {
           >
             <Grid container sm={12} md={6} alignItems={"center"}>
               <Typography
-                fontSize={{ sm: theme.spacing(5), md: theme.spacing(12) }}
+                fontSize={{ sm: theme.spacing(5), md: theme.spacing(10) }}
                 fontWeight={600}
                 textAlign={{ sm: "center", md: "left" }}
               >
@@ -111,12 +115,12 @@ function Home() {
                 {"possibility"}
               </Typography>
             </Grid>
-            <Grid item sm={12} md={6}>
+            <Grid item sm={12} md={5}>
               <img src={HomePageSection1} alt="" style={{ maxWidth: "100%" }} />
             </Grid>
           </Grid>
           <Grid container gap={{ sm: "20px", md: "0px" }}>
-            <Grid item sm={12} md={6}>
+            <Grid item sm={12} md={5}>
               <img src={HomePageSection2} alt="" style={{ maxWidth: "100%" }} />
             </Grid>
             <Grid
@@ -128,7 +132,7 @@ function Home() {
               alignItems={"center"}
             >
               <Typography
-                fontSize={{ sm: theme.spacing(5), md: theme.spacing(12) }}
+                fontSize={{ sm: theme.spacing(5), md: theme.spacing(10) }}
                 fontWeight={600}
                 textAlign={{ sm: "center", md: "end" }}
               >
