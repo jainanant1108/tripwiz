@@ -51,7 +51,7 @@ const Itinerary = () => {
         src={TripImage}
         alt=""
         style={{
-          width: "100vw",
+          width: "99vw",
           height: "20vh",
           objectFit: "cover",
         }}
