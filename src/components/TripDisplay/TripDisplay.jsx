@@ -60,7 +60,6 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved, getPlaceImage }) => {
         borderRadius={"20px"}
         justifyContent={"space-between"}
         gap={{ sm: "20px", md: "0px" }}
-
       >
         {!mobileDevice && (
           <Grid item sm={2} md={1}>
@@ -281,7 +280,7 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved, getPlaceImage }) => {
                         10.6px 28.6px 46.4px rgba(0, 0, 0, 0.046),
                         35px 95px 154px rgba(0, 0, 0, 0.07)
                         `,
-              border: `2px solid ${theme.palette.primary.main}`,
+              border: `3px solid ${theme.palette.primary.main}`,
             }}
           ></iframe>
         </Grid>
