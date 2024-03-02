@@ -47,7 +47,15 @@ const Itinerary = () => {
       <div className="container">
         <Header />
       </div>
-      <img src={TripImage} alt="" style={{ width: "100vw" }} />
+      <img
+        src={TripImage}
+        alt=""
+        style={{
+          width: "100vw",
+          height: "20vh",
+          objectFit: "cover",
+        }}
+      />
       <div className="container">
         <TripDisplay
           trip={trip_details}

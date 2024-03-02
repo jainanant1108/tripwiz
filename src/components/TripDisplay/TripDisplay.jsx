@@ -25,7 +25,7 @@ import { toPascalCase } from "../../utils/pascalCase";
 import { Person } from "@mui/icons-material";
 
 const TripDisplay = ({ trip, handleSaveClick, isTripSaved, getPlaceImage }) => {
-  const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+  const API_KEY = `AIzaSyBPKBTlohuOXARS56ARA3xLSrJwbyfJUn0`;
   const theme = useTheme();
   const mobileDevice = useMediaQuery((theme) =>
     theme.breakpoints.between("sm", "md")
@@ -60,6 +60,7 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved, getPlaceImage }) => {
         borderRadius={"20px"}
         justifyContent={"space-between"}
         gap={{ sm: "20px", md: "0px" }}
+
       >
         {!mobileDevice && (
           <Grid item sm={2} md={1}>
@@ -93,7 +94,14 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved, getPlaceImage }) => {
         </Grid>
       </Grid>
       <Grid container spacing={{ sm: "20px", md: "40px" }}>
-        <Grid container item sm={12} md={7} gap={"48px"}>
+        <Grid
+          container
+          item
+          sm={12}
+          md={7}
+          gap={"48px"}
+          mb={{ sm: "50px", md: "120px" }}
+        >
           <Grid item>
             <Typography
               fontSize={"24px"}
@@ -202,7 +210,12 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved, getPlaceImage }) => {
                               <img
                                 loading="lazy"
                                 src={place.photoUrl}
-                                style={{ borderRadius: "20px", width: "100%" }}
+                                style={{
+                                  borderRadius: "20px",
+                                  width: "100%",
+                                  height: "250px",
+                                  objectFit: "cover",
+                                }}
                                 alt={`Photo of ${place.name}`}
                               />
                               <Typography fontSize={"18px"} color={"#000"}>
@@ -252,19 +265,29 @@ const TripDisplay = ({ trip, handleSaveClick, isTripSaved, getPlaceImage }) => {
           mt={{ sm: "20px", md: "0px" }}
         >
           <iframe
-            width="100%"
-            height="400px"
+            width="60%"
+            height="600px"
             loading="lazy"
             allowfullscreen
             referrerpolicy="no-referrer-when-downgrade"
-            //src={`https://www.google.com/maps/embed/v1/place?key=${API_KEY}&q=${trip.destination}`}
+            src={`https://www.google.com/maps/embed/v1/place?key=${API_KEY}&q=${trip.destination}`}
+            style={{
+              margin: "auto",
+              marginBottom: "320px",
+              borderRadius: "0.5rem",
+              boxShadow: `
+                        1.6px 4.3px 7px rgba(0, 0, 0, 0.024),
+                        4.4px 11.9px 19.3px rgba(0, 0, 0, 0.035),
+                        10.6px 28.6px 46.4px rgba(0, 0, 0, 0.046),
+                        35px 95px 154px rgba(0, 0, 0, 0.07)
+                        `,
+              border: `2px solid ${theme.palette.primary.main}`,
+            }}
           ></iframe>
-          {
-          console.log("Api Key : ", API_KEY)}
         </Grid>
       </Grid>
     </>
   );
 };
 
-export default TripDisplay;
+export default TripDisplay;   
