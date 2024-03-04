@@ -1,16 +1,19 @@
 import React from "react";
-import { Grid, Typography, useTheme, Box } from "@mui/material";
+import { Grid, Typography, useTheme, Box, Button } from "@mui/material";
 import { Logo } from "../../utils/images";
 import "./Footer.css";
 
 const Footer = () => {
   const theme = useTheme();
+  const handleServerStatusClick = () => {
+    window.location.href = "/status";
+  };
   return (
     <Box
       sx={{
         bgcolor: theme.palette.primary.main,
         color: theme.palette.grey[200],
-        paddingTop:'40px'
+        paddingTop: "40px",
       }}
     >
       <div id="footerMainWrapper" className="container">
@@ -34,6 +37,25 @@ const Footer = () => {
                 @2023 Trip Wiz All Rights Reserved
               </Typography>
             </Grid>
+            <Typography
+              id="savedTrips"
+              variant="link"
+              onClick={handleServerStatusClick}
+              fontFamily={"Recursive"}
+              fontSize={theme.spacing(3)}
+              style={{
+                color: theme.palette.primary.main,
+                cursor: "pointer",
+                textDecoration: "underline",
+                backgroundColor: "#f6f6f6",
+                padding: "10px 25px",
+                borderRadius: "5px",
+                width: "fit-content",
+                marginTop: "20px",
+              }}
+            >
+              Server Status
+            </Typography>
           </Grid>
           <Grid
             container
