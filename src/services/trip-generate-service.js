@@ -9,7 +9,13 @@ export const generateTrip = async (trip) => {
 
 export const ping = async () => {
   const pingUrl = "/ping";
-  const response = await tripApi.get(`${pingUrl}`);
-
-  return response?.data;
+  try {
+    const response = await tripApi.get(`${pingUrl}`);
+    return response?.data;
+  }
+  catch(err){
+    
+    console.log("trip-generate-service.js : ping : ", err);
+    return {message: "server inactive.."};
+  }
 };
