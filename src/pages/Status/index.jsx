@@ -20,7 +20,7 @@ const Status = () => {
 
   const printTripWizServerStatus = async () => {
     const status = await ping();
-    if ((status.message = "server active..")) {
+    if ((status.message == "server active..")) {
       setTripWizServerStatus(true);
     } else {
       setTripWizServerStatus(false);
@@ -30,7 +30,7 @@ const Status = () => {
   const printTripWizCronJobStatus = async () => {
     const status = await getTripWizCronJobStatus();
     setTripWizCronJobStatus(status);
-    console.log("Trip Wiz Cron Job Status : ", status);
+    console.log("Trip Wiz Cron Job Status : ", status.message);
   };
 
   const printCirceCronJobStatus = async () => {
@@ -70,6 +70,9 @@ const Status = () => {
             alignSelf: "center",
           }}
         >
+          {
+            console.log("trip wiz server status : ",tripWizServerStatus)
+          }
           <h5
             ref={tripWizServerRef}
             style={{
